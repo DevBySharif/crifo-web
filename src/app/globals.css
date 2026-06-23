@@ -8,51 +8,50 @@
   --color-card: #131814;
 }
 
-@keyframes float {
-  0%, 100% { transform: translateY(0px) rotate(0deg); }
-  50% { transform: translateY(-20px) rotate(5deg); }
+/* Floating balls */
+@keyframes float1 {
+  0%, 100% { transform: translate(0px, 0px) rotate(0deg); }
+  25% { transform: translate(60px, -30px) rotate(90deg); }
+  50% { transform: translate(120px, 0px) rotate(180deg); }
+  75% { transform: translate(60px, 30px) rotate(270deg); }
 }
 
-@keyframes float-delayed {
-  0%, 100% { transform: translateY(0px) rotate(0deg); }
-  50% { transform: translateY(-16px) rotate(-3deg); }
+@keyframes float2 {
+  0%, 100% { transform: translate(0px, 0px) rotate(0deg); }
+  25% { transform: translate(-50px, -40px) rotate(-90deg); }
+  50% { transform: translate(-100px, 0px) rotate(-180deg); }
+  75% { transform: translate(-50px, 40px) rotate(-270deg); }
 }
 
-@keyframes pulse-glow {
-  0%, 100% { opacity: 0.4; transform: scale(1); }
-  50% { opacity: 0.8; transform: scale(1.05); }
+@keyframes float3 {
+  0%, 100% { transform: translateY(0px) scale(1); }
+  50% { transform: translateY(-25px) scale(1.05); }
 }
 
-@keyframes spin-slow {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+@keyframes glow-pulse {
+  0%, 100% { opacity: 0.3; transform: scale(1); }
+  50% { opacity: 0.8; transform: scale(1.15); }
 }
 
-@keyframes dash {
+@keyframes stadium-light {
+  0%, 100% { opacity: 0.02; }
+  50% { opacity: 0.08; }
+}
+
+@keyframes pitch-scan {
+  0% { transform: translateX(-100%) skewX(-15deg); }
+  100% { transform: translateX(300%) skewX(-15deg); }
+}
+
+@keyframes line-grow {
+  from { stroke-dashoffset: 1000; }
   to { stroke-dashoffset: 0; }
 }
 
-@keyframes shimmer-move {
-  0% { transform: translateX(-100%); }
-  100% { transform: translateX(100%); }
-}
-
-.animate-float {
-  animation: float 6s ease-in-out infinite;
-}
-
-.animate-float-delayed {
-  animation: float-delayed 7s ease-in-out infinite 1s;
-}
-
-.animate-pulse-glow {
-  animation: pulse-glow 3s ease-in-out infinite;
-}
-
-.animate-spin-slow {
-  animation: spin-slow 20s linear infinite;
-}
-
-.animate-shimmer {
-  animation: shimmer-move 3s ease-in-out infinite;
-}
+.animate-float1 { animation: float1 14s ease-in-out infinite; }
+.animate-float2 { animation: float2 16s ease-in-out infinite 2s; }
+.animate-float3 { animation: float3 6s ease-in-out infinite; }
+.animate-glow-pulse { animation: glow-pulse 3s ease-in-out infinite; }
+.animate-stadium-light { animation: stadium-light 4s ease-in-out infinite; }
+.animate-pitch-scan { animation: pitch-scan 8s ease-in-out infinite; }
+.animate-line-grow { animation: line-grow 2s ease-out forwards; }
