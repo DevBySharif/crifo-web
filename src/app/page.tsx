@@ -1,4 +1,13 @@
-import { Download, BarChart3, Moon, Zap, Shield, Sparkles, ChevronRight } from "lucide-react";
+import {
+  Download,
+  BarChart3,
+  Moon,
+  Zap,
+  Shield,
+  Sparkles,
+  ChevronRight,
+  Star,
+} from "lucide-react";
 
 const features = [
   {
@@ -14,7 +23,7 @@ const features = [
   {
     icon: Moon,
     title: "Dark Theme",
-    desc: "Premium dark interface with #9FEF00 lime accents, easy on the eyes",
+    desc: "Premium dark interface with lime accents, easy on the eyes",
   },
   {
     icon: Zap,
@@ -24,12 +33,12 @@ const features = [
 ];
 
 const leagues = [
-  { name: "Premier League", flag: "🏴󠁧󠁢󠁥󠁮󠁧󠁿", badge: "PR" },
-  { name: "La Liga", flag: "🇪🇸", badge: "LL" },
-  { name: "Serie A", flag: "🇮🇹", badge: "SA" },
-  { name: "Bundesliga", flag: "🇩🇪", badge: "BL" },
-  { name: "Ligue 1", flag: "🇫🇷", badge: "L1" },
-  { name: "Liga Portugal", flag: "🇵🇹", badge: "LP" },
+  { name: "Premier League", flag: "🏴󠁧󠁢󠁥󠁮󠁧󠁿" },
+  { name: "La Liga", flag: "🇪🇸" },
+  { name: "Serie A", flag: "🇮🇹" },
+  { name: "Bundesliga", flag: "🇩🇪" },
+  { name: "Ligue 1", flag: "🇫🇷" },
+  { name: "Liga Portugal", flag: "🇵🇹" },
 ];
 
 const stats = [
@@ -39,16 +48,59 @@ const stats = [
   { value: "Free", label: "No Ads" },
 ];
 
+function FootballLogoSvg({ className }: { className?: string }) {
+  return (
+    <svg
+      viewBox="0 0 120 120"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      className={className}
+    >
+      {/* Outer ring */}
+      <circle cx="60" cy="60" r="56" stroke="url(#limeGrad)" strokeWidth="3" />
+      {/* Pentagon */}
+      <path
+        d="M60 28L78 42L72 64H48L42 42L60 28Z"
+        fill="url(#limeGrad)"
+        fillOpacity="0.15"
+        stroke="url(#limeGrad)"
+        strokeWidth="2"
+        strokeLinejoin="round"
+      />
+      {/* Inner hex pattern */}
+      <path
+        d="M60 45L72 54L68 70H52L48 54L60 45Z"
+        fill="url(#limeGrad)"
+        fillOpacity="0.1"
+        stroke="url(#limeGrad)"
+        strokeWidth="1.5"
+        strokeLinejoin="round"
+      />
+      {/* Star */}
+      <path
+        d="M60 6L63 14L72 14L65 19L68 28L60 23L52 28L55 19L48 14L57 14L60 6Z"
+        fill="#9FEF00"
+        opacity="0.6"
+      />
+      <circle cx="60" cy="60" r="50" stroke="#9FEF00" strokeOpacity="0.15" strokeWidth="0.5" />
+      <defs>
+        <linearGradient id="limeGrad" x1="20" y1="20" x2="100" y2="100">
+          <stop stopColor="#9FEF00" />
+          <stop offset="1" stopColor="#6BB800" />
+        </linearGradient>
+      </defs>
+    </svg>
+  );
+}
+
 export default function Home() {
   return (
     <>
       {/* Nav */}
-      <nav className="fixed top-0 inset-x-0 z-50 border-b border-[#9FEF00]/20 bg-[#080B08]/90 backdrop-blur-xl">
+      <nav className="fixed top-0 inset-x-0 z-50 border-b border-[#9FEF00]/15 bg-[#080B08]/80 backdrop-blur-xl">
         <div className="mx-auto flex max-w-6xl items-center justify-between px-6 h-16">
           <div className="flex items-center gap-3">
-            <div className="flex items-center justify-center w-9 h-9 rounded-xl bg-gradient-to-br from-[#9FEF00] to-[#6BB800] shadow-lg shadow-[#9FEF00]/20">
-              <span className="text-lg">⚽</span>
-            </div>
+            <FootballLogoSvg className="w-9 h-9" />
             <span className="text-lg font-extrabold tracking-tight text-white">
               Football <span className="text-[#9FEF00]">Eon</span>
             </span>
@@ -65,17 +117,39 @@ export default function Home() {
       <main>
         {/* Hero */}
         <section className="relative flex min-h-dvh flex-col items-center justify-center px-6 pt-24 pb-20 text-center overflow-hidden">
-          <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,_#9FEF00_0%,_transparent_60%)] opacity-[0.08]" />
+          {/* Background effects */}
+          <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,_#9FEF00_0%,_transparent_60%)] opacity-[0.06]" />
           <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_50%_0%,_#131814_0%,_#080B08_70%)]" />
-          <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHZpZXdCb3g9IjAgMCA0MCA0MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSIjOUZFRjAwIiBmaWxsLW9wYWNpdHk9IjAuMDMiPjxjaXJjbGUgY3g9IjEiIGN5PSIxIiByPSIxIi8+PC9nPjwvc3ZnPg==')] opacity-50" />
+          <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSIjOUZFRjAwIiBmaWxsLW9wYWNpdHk9IjAuMDMiPjxjaXJjbGUgY3g9IjEiIGN5PSIxIiByPSIxIi8+PC9nPjwvc3ZnPg==')] opacity-50" />
+
+          {/* Animated football elements */}
+          <div className="pointer-events-none absolute inset-0 overflow-hidden">
+            {/* Floating football icons */}
+            <div className="animate-float absolute top-[15%] left-[8%] text-3xl opacity-[0.08]">⚽</div>
+            <div className="animate-float-delayed absolute top-[25%] right-[10%] text-2xl opacity-[0.06]">⚽</div>
+            <div className="animate-float absolute bottom-[20%] left-[15%] text-4xl opacity-[0.05]">⚽</div>
+            <div className="animate-float-delayed absolute bottom-[30%] right-[5%] text-3xl opacity-[0.07]">⚽</div>
+            {/* Glowing orbs */}
+            <div className="animate-pulse-glow absolute top-[30%] left-[20%] w-32 h-32 rounded-full bg-[#9FEF00] blur-[80px] opacity-[0.04]" />
+            <div className="animate-pulse-glow absolute top-[40%] right-[20%] w-40 h-40 rounded-full bg-[#8BDE00] blur-[100px] opacity-[0.03]" style={{ animationDelay: "1.5s" }} />
+          </div>
+
           <div className="relative">
-            <div className="mx-auto mb-8 w-28 h-28 rounded-[32px] bg-gradient-to-br from-[#9FEF00] to-[#6BB800] shadow-2xl shadow-[#9FEF00]/30 flex items-center justify-center ring-1 ring-white/10">
-              <span className="text-5xl drop-shadow-lg">⚽</span>
+            {/* Logo */}
+            <div className="mx-auto mb-8 w-28 h-28 relative">
+              <div className="absolute inset-0 bg-gradient-to-br from-[#9FEF00] to-[#6BB800] rounded-[32px] blur-xl opacity-30 animate-pulse-glow" />
+              <div className="relative w-full h-full rounded-[32px] bg-gradient-to-br from-[#9FEF00] to-[#6BB800] shadow-2xl shadow-[#9FEF00]/30 flex items-center justify-center ring-1 ring-white/10">
+                <FootballLogoSvg className="w-16 h-16" />
+              </div>
             </div>
+
+            {/* Badge */}
             <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#9FEF00]/10 border border-[#9FEF00]/20 text-[#9FEF00] text-xs font-semibold mb-6 tracking-wider uppercase">
               <span className="w-1.5 h-1.5 rounded-full bg-[#9FEF00] animate-pulse" />
               Live Scores — Now Available
             </div>
+
+            {/* Title */}
             <h1 className="mb-4 text-5xl font-extrabold tracking-tight sm:text-6xl lg:text-7xl text-white leading-[1.1]">
               Football
               <br />
@@ -87,12 +161,14 @@ export default function Home() {
               Live scores, match stats & detailed events from the top European
               leagues — right on your phone.
             </p>
+
+            {/* CTA */}
             <div className="flex flex-wrap justify-center gap-4">
               <a
                 href="#download"
-                className="inline-flex items-center gap-2.5 rounded-full bg-[#9FEF00] px-8 py-3.5 font-bold text-[#080B08] transition-all hover:bg-[#8BDE00] hover:scale-105 hover:shadow-xl hover:shadow-[#9FEF00]/30 text-base"
+                className="inline-flex items-center gap-2.5 rounded-full bg-[#9FEF00] px-8 py-3.5 font-bold text-[#080B08] transition-all hover:bg-[#8BDE00] hover:scale-105 hover:shadow-xl hover:shadow-[#9FEF00]/30 text-base group"
               >
-                <Download className="h-5 w-5" />
+                <Download className="h-5 w-5 transition group-hover:-translate-y-0.5" />
                 Download APK
               </a>
               <a
@@ -103,6 +179,8 @@ export default function Home() {
                 <ChevronRight className="h-4 w-4" />
               </a>
             </div>
+
+            {/* Leagues */}
             <div className="mt-12 flex flex-wrap justify-center gap-2">
               {leagues.map((l) => (
                 <span
@@ -111,9 +189,16 @@ export default function Home() {
                 >
                   <span className="text-base">{l.flag}</span>
                   <span className="hidden sm:inline">{l.name}</span>
-                  <span className="sm:hidden">{l.badge}</span>
+                  <span className="sm:hidden">{l.name.slice(0, 12)}</span>
                 </span>
               ))}
+            </div>
+          </div>
+
+          {/* Scroll indicator */}
+          <div className="absolute bottom-8 animate-bounce">
+            <div className="w-5 h-8 rounded-full border border-zinc-700 flex justify-center pt-1.5">
+              <div className="w-1 h-2 rounded-full bg-zinc-500" />
             </div>
           </div>
         </section>
@@ -179,6 +264,7 @@ export default function Home() {
           <div className="mx-auto max-w-6xl px-6 py-24 sm:py-32">
             <div className="mb-16 text-center">
               <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#9FEF00]/10 border border-[#9FEF00]/20 text-[#9FEF00] text-xs font-semibold mb-5 tracking-wider uppercase">
+                <Star className="w-3.5 h-3.5" />
                 Leagues
               </div>
               <h2 className="text-4xl font-extrabold tracking-tight sm:text-5xl text-white">
@@ -245,7 +331,8 @@ export default function Home() {
       {/* Footer */}
       <footer className="border-t border-[#9FEF00]/8 bg-[#080B08]">
         <div className="mx-auto flex max-w-6xl flex-col items-center gap-2 px-6 py-10 text-center text-sm text-zinc-600">
-          <div className="flex items-center gap-2 text-zinc-500">
+          <div className="flex items-center gap-2.5 mb-1">
+            <FootballLogoSvg className="w-6 h-6" />
             <span className="font-bold text-white">Football <span className="text-[#9FEF00]">Eon</span></span>
           </div>
           <p>© 2026 Football Eon. Not affiliated with ESPN or any football league.</p>
