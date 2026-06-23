@@ -8,50 +8,62 @@
   --color-card: #131814;
 }
 
-/* Floating balls */
-@keyframes float1 {
-  0%, 100% { transform: translate(0px, 0px) rotate(0deg); }
-  25% { transform: translate(60px, -30px) rotate(90deg); }
-  50% { transform: translate(120px, 0px) rotate(180deg); }
-  75% { transform: translate(60px, 30px) rotate(270deg); }
+@keyframes float-ball {
+  0%, 100% { transform: translate(0, 0) rotate(0deg); }
+  25% { transform: translate(80px, -40px) rotate(10deg); }
+  50% { transform: translate(160px, 0) rotate(0deg); }
+  75% { transform: translate(80px, 40px) rotate(-10deg); }
 }
 
-@keyframes float2 {
-  0%, 100% { transform: translate(0px, 0px) rotate(0deg); }
-  25% { transform: translate(-50px, -40px) rotate(-90deg); }
-  50% { transform: translate(-100px, 0px) rotate(-180deg); }
-  75% { transform: translate(-50px, 40px) rotate(-270deg); }
-}
-
-@keyframes float3 {
-  0%, 100% { transform: translateY(0px) scale(1); }
-  50% { transform: translateY(-25px) scale(1.05); }
+@keyframes float-ball2 {
+  0%, 100% { transform: translate(0, 0) rotate(0deg); }
+  25% { transform: translate(-60px, -50px) rotate(-8deg); }
+  50% { transform: translate(-120px, 0) rotate(0deg); }
+  75% { transform: translate(-60px, 50px) rotate(8deg); }
 }
 
 @keyframes glow-pulse {
-  0%, 100% { opacity: 0.3; transform: scale(1); }
-  50% { opacity: 0.8; transform: scale(1.15); }
+  0%, 100% { opacity: 0.2; transform: scale(1); }
+  50% { opacity: 0.6; transform: scale(1.2); }
 }
 
 @keyframes stadium-light {
-  0%, 100% { opacity: 0.02; }
-  50% { opacity: 0.08; }
+  0%, 100% { opacity: 0; }
+  50% { opacity: 0.06; }
 }
 
-@keyframes pitch-scan {
-  0% { transform: translateX(-100%) skewX(-15deg); }
-  100% { transform: translateX(300%) skewX(-15deg); }
+@keyframes phone-float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-12px); }
 }
 
-@keyframes line-grow {
-  from { stroke-dashoffset: 1000; }
-  to { stroke-dashoffset: 0; }
+@keyframes flicker {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
 }
 
-.animate-float1 { animation: float1 14s ease-in-out infinite; }
-.animate-float2 { animation: float2 16s ease-in-out infinite 2s; }
-.animate-float3 { animation: float3 6s ease-in-out infinite; }
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+@keyframes score-pop {
+  0% { transform: scale(0.8); opacity: 0; }
+  60% { transform: scale(1.1); }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+@keyframes slide-up {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-float-ball { animation: float-ball 18s ease-in-out infinite; }
+.animate-float-ball2 { animation: float-ball2 20s ease-in-out infinite 3s; }
 .animate-glow-pulse { animation: glow-pulse 3s ease-in-out infinite; }
-.animate-stadium-light { animation: stadium-light 4s ease-in-out infinite; }
-.animate-pitch-scan { animation: pitch-scan 8s ease-in-out infinite; }
-.animate-line-grow { animation: line-grow 2s ease-out forwards; }
+.animate-stadium-light { animation: stadium-light 5s ease-in-out infinite; }
+.animate-phone-float { animation: phone-float 4s ease-in-out infinite; }
+.animate-flicker { animation: flicker 2s ease-in-out infinite; }
+.animate-marquee { animation: marquee 30s linear infinite; }
+.animate-score-pop { animation: score-pop 0.5s ease-out forwards; }
+.animate-slide-up { animation: slide-up 0.6s ease-out forwards; }
