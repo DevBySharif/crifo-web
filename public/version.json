@@ -1,6 +1,1 @@
-{
-  "versionCode": 3,
-  "versionName": "1.1.0",
-  "apkUrl": "/app-lite-debug.apk",
-  "releaseNotes": "Bug fixes and performance improvements"
-}
+{"versionCode":4,"versionName":"1.1.0","apkUrl":"/app-lite-debug.apk","releaseNotes":"Layout fixes and improvements"}
