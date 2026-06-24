@@ -184,8 +184,8 @@ function BannerCarousel() {
   return (
     <div className="relative z-10 shrink-0">
       <div className="absolute -inset-20 bg-[#9FEF00] opacity-[0.03] blur-[100px] rounded-full" />
-      <PhoneFrame active tall>
-        <div className="p-3 text-left text-xs" key={idx}>
+      <PhoneFrame active>
+        <div key={idx}>
           {phoneScreens[idx].content}
         </div>
       </PhoneFrame>
@@ -198,25 +198,25 @@ function BannerCarousel() {
   );
 }
 
-function PhoneFrame({ children, active, tall }: { children: React.ReactNode; active?: boolean; tall?: boolean }) {
+function PhoneFrame({ children, active }: { children: React.ReactNode; active?: boolean }) {
   return (
-    <div className={`relative w-[260px] sm:w-[280px] ${active ? "animate-phone-float" : ""}`}>
-      <div className="relative rounded-[32px] bg-zinc-900 p-2 shadow-2xl shadow-black/60 ring-1 ring-white/10">
+    <div className={`relative w-[270px] sm:w-[290px] ${active ? "animate-phone-float" : ""}`}>
+      <div className="relative rounded-[36px] bg-zinc-900 p-2.5 shadow-2xl shadow-black/60 ring-1 ring-white/10">
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-28 h-5 bg-black rounded-b-xl z-10 flex items-center justify-center gap-2">
           <div className="w-2 h-2 rounded-full bg-zinc-800" />
         </div>
-        <div className={`rounded-[24px] bg-[#080B08] overflow-hidden relative ${tall ? "h-[440px]" : "aspect-[9/19]"}`}>
-          <div className="flex items-center justify-between px-5 pt-3 pb-1 text-[8px] text-white/60">
-            <span>9:41</span>
+        <div className="rounded-[26px] bg-[#080B08] overflow-hidden relative">
+          <div className="flex items-center justify-between px-5 pt-3 pb-1 text-[8px] text-white/60 bg-[#080B08] sticky top-0 z-10">
+            <span className="font-semibold">9:41</span>
             <div className="flex items-center gap-1">
-              <div className="w-3 h-1.5 rounded-sm border border-white/30 relative"><div className="absolute inset-0.5 rounded-sm bg-white/40" /></div>
-              <span>📶</span>
+              <div className="w-3.5 h-2 rounded-sm border border-white/30 relative"><div className="absolute inset-0.5 rounded-sm bg-white/40" /></div>
+              <span className="text-[10px]">📶</span>
             </div>
           </div>
-          <div className="absolute inset-0 pt-7 overflow-y-auto scrollbar-hide">{children}</div>
+          <div className="overflow-y-auto scrollbar-hide max-h-[500px]">{children}</div>
         </div>
       </div>
-      <div className="absolute inset-0 rounded-[32px] bg-gradient-to-t from-white/[0.03] to-transparent pointer-events-none" />
+      <div className="absolute inset-0 rounded-[36px] bg-gradient-to-t from-white/[0.03] to-transparent pointer-events-none" />
     </div>
   );
 }
@@ -372,7 +372,7 @@ export default function Home() {
             <div className="flex flex-wrap justify-center gap-8 lg:gap-12">
               {phoneScreens.map((screen, i) => (
                 <div key={screen.id} className="flex flex-col items-center gap-4">
-                  <PhoneFrame tall>
+                  <PhoneFrame>
                     {screen.content}
                   </PhoneFrame>
                   <div className="flex items-center gap-2">
