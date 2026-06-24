@@ -32,7 +32,7 @@ const features = [
   {
     icon: Zap,
     title: "Fast & Light",
-    desc: "16 MB only, optimized for quick loading & minimal battery usage",
+    desc: "20 MB only, optimized for quick loading & minimal battery usage",
   },
 ];
 
@@ -317,7 +317,7 @@ export default function Home() {
             {[
               { value: "7+", label: "Leagues Covered" },
               { value: "30+", label: "Stat Categories" },
-              { value: "16MB", label: "App Size" },
+              { value: "20MB", label: "App Size" },
               { value: "Free", label: "No Ads / Premium" },
             ].map((s) => (
               <div key={s.label} className="text-center">
@@ -444,11 +444,11 @@ export default function Home() {
               Download APK
             </a>
             <div className="mt-6 flex items-center justify-center gap-6 text-sm text-zinc-600">
-              <span>Version 1.0.0</span>
+              <span>Version 1.1.0</span>
               <span className="w-1 h-1 rounded-full bg-zinc-700" />
               <span>Android 8.0+</span>
               <span className="w-1 h-1 rounded-full bg-zinc-700" />
-              <span>16 MB</span>
+              <span>20 MB</span>
             </div>
           </div>
         </section>
