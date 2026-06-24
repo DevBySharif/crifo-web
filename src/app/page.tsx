@@ -206,7 +206,7 @@ function BannerCarousel() {
 }
 
 function PhoneFrame({ children, active, size = "hero" }: { children: React.ReactNode; active?: boolean; size?: "hero" | "preview" }) {
-  const widthClass = size === "hero" ? "w-[300px] sm:w-[380px]" : "w-[300px]";
+  const widthClass = "w-[300px]";
   const contentHeight = "h-[480px]";
   return (
     <div className={`relative ${widthClass} ${active ? "animate-phone-float" : ""}`}>
