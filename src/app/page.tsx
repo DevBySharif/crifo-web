@@ -50,41 +50,41 @@ const phoneScreens = [
     id: "home",
     label: "Home",
     content: (
-      <div className="p-3 text-left text-xs">
-        <div className="flex items-center gap-2 mb-3">
-          <div className="flex h-7 w-7 items-center justify-center rounded-full bg-[#9FEF00]/20 text-sm font-bold">⚽</div>
+      <div className="p-4 text-left text-sm">
+        <div className="flex items-center gap-3 mb-4">
+          <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[#9FEF00]/20 text-lg font-bold">⚽</div>
           <div>
-            <div className="font-bold text-white text-[11px] leading-tight">Football Fan</div>
-            <div className="text-[8px] text-zinc-500">Welcome back</div>
+            <div className="font-bold text-white text-sm leading-tight">Football Fan</div>
+            <div className="text-[11px] text-zinc-500">Welcome back</div>
           </div>
         </div>
-        <div className="flex items-center gap-1.5 mb-2">
-          <span className="text-[#9FEF00] text-[8px]">●</span>
-          <span className="font-bold text-white text-[10px] tracking-wider">LIVE MATCHES</span>
-          <span className="ml-auto text-[8px] bg-red-500/20 text-red-400 px-2 py-0.5 rounded font-bold">4 LIVE</span>
+        <div className="flex items-center gap-1.5 mb-3">
+          <span className="text-[#9FEF00] text-[10px]">●</span>
+          <span className="font-bold text-white text-xs tracking-wider">LIVE MATCHES</span>
+          <span className="ml-auto text-[10px] bg-red-500/20 text-red-400 px-2.5 py-0.5 rounded font-bold">4 LIVE</span>
         </div>
         {[
           { home: "Arsenal", away: "Chelsea", score: "2-1", minute: "67'" },
           { home: "Barcelona", away: "Real Madrid", score: "1-1", minute: "42'" },
           { home: "Bayern", away: "Dortmund", score: "3-0", minute: "55'" },
         ].map((m, i) => (
-          <div key={i} className="mb-1.5 rounded-lg bg-[#131814] p-2.5 border border-white/5">
+          <div key={i} className="mb-2 rounded-lg bg-[#131814] p-3 border border-white/5">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2 flex-1 min-w-0">
-                <span className="text-[9px] text-zinc-300 font-medium truncate">{m.home}</span>
+                <span className="text-[13px] text-zinc-300 font-medium truncate">{m.home}</span>
               </div>
-              <div className="flex items-center gap-1.5">
-                <span className="font-bold text-[13px] text-white font-mono">{m.score}</span>
-                <span className="text-[7px] bg-red-500/20 text-red-400 px-1.5 py-0.5 rounded font-bold">{m.minute}</span>
+              <div className="flex items-center gap-2">
+                <span className="font-bold text-base text-white font-mono">{m.score}</span>
+                <span className="text-[10px] bg-red-500/20 text-red-400 px-2 py-0.5 rounded font-bold">{m.minute}</span>
               </div>
               <div className="flex items-center gap-2 flex-1 min-w-0 justify-end">
-                <span className="text-[9px] text-zinc-300 font-medium truncate">{m.away}</span>
+                <span className="text-[13px] text-zinc-300 font-medium truncate">{m.away}</span>
               </div>
             </div>
           </div>
         ))}
-        <div className="mt-2 rounded-lg bg-[#131814] p-3 border border-dashed border-white/5">
-          <div className="text-[8px] text-zinc-600 text-center font-medium">⬆ Scroll for more matches</div>
+        <div className="mt-3 rounded-lg bg-[#131814] p-3.5 border border-dashed border-white/5">
+          <div className="text-[10px] text-zinc-600 text-center font-medium">⬆ Scroll for more matches</div>
         </div>
       </div>
     ),
@@ -93,26 +93,26 @@ const phoneScreens = [
     id: "score",
     label: "Score",
     content: (
-      <div className="p-3 text-left text-xs">
-        <div className="flex items-center gap-1.5 mb-3">
-          <span className="text-[#9FEF00] text-[8px]">●</span>
-          <span className="font-bold text-white text-[10px] tracking-wider">SCORES</span>
-          <span className="ml-auto text-[8px] text-zinc-500 bg-white/5 px-2 py-0.5 rounded">↻ Live</span>
+      <div className="p-4 text-left text-sm">
+        <div className="flex items-center gap-1.5 mb-4">
+          <span className="text-[#9FEF00] text-[10px]">●</span>
+          <span className="font-bold text-white text-xs tracking-wider">SCORES</span>
+          <span className="ml-auto text-[10px] text-zinc-500 bg-white/5 px-2.5 py-0.5 rounded">↻ Live</span>
         </div>
         {[
           { l: "🏴󠁧󠁢󠁥󠁮󠁧󠁿 Premier League", matches: [{ a: "Arsenal", b: "Chelsea", s: "2-1" }, { a: "Man City", b: "Liverpool", s: "3-0" }] },
           { l: "🇪🇸 La Liga", matches: [{ a: "Barcelona", b: "Real Madrid", s: "1-1" }, { a: "Atletico", b: "Sevilla", s: "0-0" }] },
         ].map((lg, i) => (
-          <div key={i} className="mb-2 rounded-lg bg-[#131814] p-2.5 border border-white/5">
-            <div className="flex items-center gap-1.5 mb-2">
-              <span className="text-[10px] font-semibold">{lg.l}</span>
-              <span className="ml-auto text-[7px] bg-white/5 text-zinc-500 px-1.5 py-0.5 rounded">{lg.matches.length} matches</span>
+          <div key={i} className="mb-3 rounded-lg bg-[#131814] p-3 border border-white/5">
+            <div className="flex items-center gap-1.5 mb-2.5">
+              <span className="text-xs font-semibold">{lg.l}</span>
+              <span className="ml-auto text-[9px] bg-white/5 text-zinc-500 px-2 py-0.5 rounded">{lg.matches.length} matches</span>
             </div>
             {lg.matches.map((m, j) => (
-              <div key={j} className="flex items-center justify-between py-1 text-[9px] border-t border-white/5 first:border-t-0">
-                <span className="text-zinc-300 w-16 truncate font-medium">{m.a}</span>
-                <span className="font-bold text-white font-mono text-[11px]">{m.s}</span>
-                <span className="text-zinc-300 w-16 truncate text-right font-medium">{m.b}</span>
+              <div key={j} className="flex items-center justify-between py-1.5 text-xs border-t border-white/5 first:border-t-0">
+                <span className="text-zinc-300 w-20 truncate font-medium">{m.a}</span>
+                <span className="font-bold text-white font-mono text-sm">{m.s}</span>
+                <span className="text-zinc-300 w-20 truncate text-right font-medium">{m.b}</span>
               </div>
             ))}
           </div>
@@ -124,38 +124,38 @@ const phoneScreens = [
     id: "livetv",
     label: "Live TV",
     content: (
-      <div className="p-3 text-left text-xs">
-        <div className="relative mb-3 rounded-xl bg-black overflow-hidden border border-white/5">
+      <div className="p-4 text-left text-sm">
+        <div className="relative mb-4 rounded-xl bg-black overflow-hidden border border-white/5">
           <div className="aspect-video flex items-center justify-center bg-gradient-to-br from-zinc-900 to-black">
             <div className="text-center">
-              <div className="text-3xl mb-1">📺</div>
-              <div className="text-[9px] text-zinc-500 font-mono tracking-widest">LIVE STREAM</div>
+              <div className="text-4xl mb-2">📺</div>
+              <div className="text-[11px] text-zinc-500 font-mono tracking-widest">LIVE STREAM</div>
             </div>
           </div>
           <div className="absolute top-2 left-2 flex items-center gap-1.5">
-            <span className="w-2 h-2 rounded-full bg-red-500 animate-pulse" />
-            <span className="text-[7px] font-bold text-white tracking-wider bg-black/70 px-2 py-0.5 rounded">LIVE</span>
+            <span className="w-3 h-3 rounded-full bg-red-500 animate-pulse" />
+            <span className="text-[9px] font-bold text-white tracking-wider bg-black/70 px-2.5 py-0.5 rounded">LIVE</span>
           </div>
-          <div className="absolute bottom-1.5 left-2 right-2 flex items-center justify-between">
-            <span className="text-[7px] text-white/90 bg-black/70 px-2 py-0.5 rounded font-medium">beIN SPORTS HD 1</span>
-            <span className="text-[7px] text-white/70 bg-black/70 px-2 py-0.5 rounded font-mono">42:15</span>
+          <div className="absolute bottom-2 left-3 right-3 flex items-center justify-between">
+            <span className="text-[9px] text-white/90 bg-black/70 px-2.5 py-0.5 rounded font-medium">beIN SPORTS HD 1</span>
+            <span className="text-[9px] text-white/70 bg-black/70 px-2.5 py-0.5 rounded font-mono">42:15</span>
           </div>
         </div>
-        <div className="space-y-1.5">
+        <div className="space-y-2">
           {[
             { ch: "Sky Sports PL", match: "Arsenal vs Chelsea", live: true },
             { ch: "ESPN 2", match: "Barcelona vs Real Madrid", live: true },
             { ch: "DAZN 1", match: "Bayern vs Dortmund", live: false },
             { ch: "CBS Sports", match: "AC Milan vs Inter", live: false },
           ].map((c, i) => (
-            <div key={i} className="flex items-center gap-3 rounded-lg bg-[#131814] p-2.5 border border-white/5">
-              <div className={`w-2 h-2 rounded-full shrink-0 ${c.live ? 'bg-red-500 animate-pulse' : 'bg-zinc-600'}`} />
+            <div key={i} className="flex items-center gap-3 rounded-lg bg-[#131814] p-3 border border-white/5">
+              <div className={`w-3 h-3 rounded-full shrink-0 ${c.live ? 'bg-red-500 animate-pulse' : 'bg-zinc-600'}`} />
               <div className="flex-1 min-w-0">
-                <div className="font-bold text-white text-[9px] truncate">{c.ch}</div>
-                <div className="text-[8px] text-zinc-500 truncate">{c.match}</div>
+                <div className="font-bold text-white text-xs truncate">{c.ch}</div>
+                <div className="text-[10px] text-zinc-500 truncate">{c.match}</div>
               </div>
-              {c.live && <span className="text-[7px] bg-red-500/20 text-red-400 px-2 py-0.5 rounded font-bold shrink-0">LIVE</span>}
-              {!c.live && <span className="text-[7px] bg-zinc-800 text-zinc-500 px-2 py-0.5 rounded shrink-0">UPCOMING</span>}
+              {c.live && <span className="text-[9px] bg-red-500/20 text-red-400 px-2.5 py-0.5 rounded font-bold shrink-0">LIVE</span>}
+              {!c.live && <span className="text-[9px] bg-zinc-800 text-zinc-500 px-2.5 py-0.5 rounded shrink-0">UPCOMING</span>}
             </div>
           ))}
         </div>
@@ -207,20 +207,20 @@ function BannerCarousel() {
 
 function PhoneFrame({ children, active }: { children: React.ReactNode; active?: boolean }) {
   return (
-    <div className={`relative w-[280px] sm:w-[310px] ${active ? "animate-phone-float" : ""}`}>
+    <div className={`relative w-[300px] sm:w-[380px] ${active ? "animate-phone-float" : ""}`}>
       <div className="relative rounded-[32px] bg-zinc-900 p-2 shadow-2xl shadow-black/60 ring-1 ring-white/10">
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-28 h-5 bg-black rounded-b-xl z-10 flex items-center justify-center gap-2">
           <div className="w-2 h-2 rounded-full bg-zinc-800" />
         </div>
         <div className="rounded-[24px] bg-[#080B08] overflow-hidden relative">
-          <div className="flex items-center justify-between px-5 pt-3 pb-1 text-[8px] text-white/60 bg-[#080B08] sticky top-0 z-10">
+          <div className="flex items-center justify-between px-5 pt-3 pb-1 text-[10px] text-white/60 bg-[#080B08] sticky top-0 z-10">
             <span className="font-semibold">9:41</span>
             <div className="flex items-center gap-1">
-              <div className="w-3.5 h-2 rounded-sm border border-white/30 relative"><div className="absolute inset-0.5 rounded-sm bg-white/40" /></div>
-              <span className="text-[10px]">📶</span>
+              <div className="w-4 h-2.5 rounded-sm border border-white/30 relative"><div className="absolute inset-0.5 rounded-sm bg-white/40" /></div>
+              <span className="text-xs">📶</span>
             </div>
           </div>
-          <div className="overflow-y-auto scrollbar-hide max-h-[500px]">{children}</div>
+          <div className="overflow-y-auto scrollbar-hide max-h-[560px]">{children}</div>
         </div>
       </div>
       <div className="absolute inset-0 rounded-[32px] bg-gradient-to-t from-white/[0.03] to-transparent pointer-events-none" />
