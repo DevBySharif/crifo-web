@@ -1,3 +1,5 @@
+"use client";
+import { useEffect } from "react";
 import {
   Download,
   BarChart3,
@@ -9,6 +11,7 @@ import {
   Star,
   Check,
 } from "lucide-react";
+import { trackVisit } from "@/lib/tracker";
 
 const features = [
   {
@@ -44,125 +47,108 @@ const leagues = [
 
 const phoneScreens = [
   {
-    id: "scores",
-    label: "Score Tab",
+    id: "home",
+    label: "Home",
     content: (
       <div className="p-3 text-left text-xs">
-        <div className="flex items-center justify-between mb-2">
-          <span className="font-bold text-white">Scores</span>
-          <span className="text-[#9FEF00] text-[10px]">↻</span>
+        <div className="flex items-center gap-2 mb-2">
+          <div className="flex h-6 w-6 items-center justify-center rounded-full bg-[#9FEF00]/20 text-xs">⚽</div>
+          <div>
+            <div className="font-bold text-white text-[9px] leading-tight">Football Fan</div>
+            <div className="text-[7px] text-zinc-500">Welcome back</div>
+          </div>
+        </div>
+        <div className="flex items-center gap-1.5 mb-2">
+          <span className="text-[#9FEF00] text-[7px]">●</span>
+          <span className="font-bold text-white text-[8px] tracking-wider">LIVE MATCHES</span>
+          <span className="ml-auto text-[7px] bg-red-500/20 text-red-400 px-1.5 rounded font-bold">4 LIVE</span>
         </div>
         {[
-          { l: "🏴󠁧󠁢󠁥󠁮󠁧󠁿 Premier League", c: 3 },
-          { l: "🇪🇸 La Liga", c: 2 },
-          { l: "🇮🇹 Serie A", c: 4 },
-          { l: "🇩🇪 Bundesliga", c: 2 },
+          { home: "Arsenal", away: "Chelsea", score: "2-1", minute: "67'" },
+          { home: "Barcelona", away: "Real Madrid", score: "1-1", minute: "42'" },
+          { home: "Bayern", away: "Dortmund", score: "3-0", minute: "55'" },
+        ].map((m, i) => (
+          <div key={i} className="mb-1 rounded-lg bg-[#131814] p-2 border border-white/5">
+            <div className="flex items-center justify-between">
+              <span className="text-[8px] text-zinc-300 truncate w-16">{m.home}</span>
+              <div className="flex items-center gap-1">
+                <span className="font-bold text-[10px] text-white font-mono">{m.score}</span>
+                <span className="text-[6px] bg-red-500/20 text-red-400 px-1 rounded font-bold">{m.minute}</span>
+              </div>
+              <span className="text-[8px] text-zinc-300 truncate w-16 text-right">{m.away}</span>
+            </div>
+          </div>
+        ))}
+        <div className="mt-1 rounded-lg bg-[#131814] p-2 border border-dashed border-white/5">
+          <div className="text-[7px] text-zinc-600 text-center">⬆ More matches</div>
+        </div>
+      </div>
+    ),
+  },
+  {
+    id: "score",
+    label: "Score",
+    content: (
+      <div className="p-3 text-left text-xs">
+        <div className="flex items-center gap-1.5 mb-2">
+          <span className="text-[#9FEF00] text-[7px]">●</span>
+          <span className="font-bold text-white text-[8px] tracking-wider">SCORES</span>
+          <span className="ml-auto text-[7px] text-zinc-500">↻</span>
+        </div>
+        {[
+          { l: "🏴󠁧󠁢󠁥󠁮󠁧󠁿 Premier League", matches: [{ a: "Arsenal", b: "Chelsea", s: "2-1" }, { a: "Man City", b: "Liverpool", s: "3-0" }] },
+          { l: "🇪🇸 La Liga", matches: [{ a: "Barcelona", b: "Real Madrid", s: "1-1" }, { a: "Atletico", b: "Sevilla", s: "0-0" }] },
         ].map((lg, i) => (
-          <div key={i} className="mb-2 rounded-lg bg-[#131814] p-2 border border-white/5">
-            <div className="flex items-center gap-1.5 mb-1.5">
-              <span className="text-[10px]">{lg.l}</span>
-              <span className="ml-auto text-[9px] text-zinc-500 bg-white/5 px-1.5 py-0.5 rounded">{lg.c}</span>
+          <div key={i} className="mb-1.5 rounded-lg bg-[#131814] p-2 border border-white/5">
+            <div className="flex items-center gap-1 mb-1">
+              <span className="text-[8px]">{lg.l}</span>
             </div>
-            <div className="space-y-1">
-              <div className="flex items-center justify-between text-[10px]">
-                <span className="text-zinc-300">Arsenal</span>
-                <span className="font-bold text-white font-mono">2 - 1</span>
-                <span className="text-zinc-300">Chelsea</span>
+            {lg.matches.map((m, j) => (
+              <div key={j} className="flex items-center justify-between py-0.5 text-[8px]">
+                <span className="text-zinc-300 w-14 truncate">{m.a}</span>
+                <span className="font-bold text-white font-mono text-[9px]">{m.s}</span>
+                <span className="text-zinc-300 w-14 truncate text-right">{m.b}</span>
               </div>
-              <div className="flex items-center justify-between text-[10px]">
-                <span className="text-zinc-300">Man City</span>
-                <span className="font-bold text-white font-mono">3 - 0</span>
-                <span className="text-zinc-300">Liverpool</span>
-              </div>
-            </div>
+            ))}
           </div>
         ))}
       </div>
     ),
   },
   {
-    id: "details",
-    label: "Match Details",
+    id: "livetv",
+    label: "Live TV",
     content: (
       <div className="p-3 text-left text-xs">
-        <div className="flex items-center gap-2 mb-3">
-          <span className="text-[#9FEF00] text-sm">←</span>
-          <span className="font-bold text-white text-[10px] tracking-wider">MATCH DETAILS</span>
-        </div>
-        <div className="text-center mb-3">
-          <div className="text-[11px] text-zinc-400 uppercase tracking-wider mb-1">Premier League</div>
-          <div className="flex items-center justify-center gap-3">
+        <div className="relative mb-2 rounded-lg bg-black overflow-hidden border border-white/5">
+          <div className="aspect-video flex items-center justify-center bg-gradient-to-br from-zinc-900 to-black">
             <div className="text-center">
-              <div className="text-lg mb-0.5">🏴󠁧󠁢󠁥󠁮󠁧󠁿</div>
-              <div className="font-bold text-white text-[10px]">Arsenal</div>
-            </div>
-            <div className="text-center">
-              <div className="font-mono text-2xl font-black text-white">2-1</div>
-              <div className="text-[8px] bg-red-500/20 text-red-400 px-2 rounded font-bold mt-0.5">LIVE 67'</div>
-            </div>
-            <div className="text-center">
-              <div className="text-lg mb-0.5">🔵</div>
-              <div className="font-bold text-white text-[10px]">Chelsea</div>
+              <div className="text-2xl mb-1">📺</div>
+              <div className="text-[8px] text-zinc-500 font-mono">LIVE</div>
             </div>
           </div>
-        </div>
-        <div className="rounded-lg bg-[#131814] p-2 border border-white/5">
-          <div className="text-[8px] text-zinc-500 uppercase tracking-wider mb-1.5">Team Statistics</div>
-          {[
-            { l: "Possession", a: "58%", b: "42%" },
-            { l: "Shots", a: "12", b: "8" },
-            { l: "SOT", a: "5", b: "3" },
-            { l: "Corners", a: "6", b: "2" },
-          ].map((s, i) => (
-            <div key={i} className="flex items-center gap-2 py-1">
-              <span className="w-6 text-right font-mono font-bold text-white text-[9px]">{s.a}</span>
-              <div className="flex-1 h-1.5 rounded-full bg-white/5 overflow-hidden">
-                <div
-                  className="h-full rounded-full bg-[#9FEF00]"
-                  style={{ width: `${parseInt(s.a) / (parseInt(s.a) + parseInt(s.b)) * 100}%` }}
-                />
-              </div>
-              <span className="w-12 text-center text-[7px] text-zinc-500">{s.l}</span>
-              <div className="flex-1 h-1.5 rounded-full bg-white/5 overflow-hidden">
-                <div
-                  className="h-full rounded-full bg-white/20 ml-auto"
-                  style={{ width: `${parseInt(s.b) / (parseInt(s.a) + parseInt(s.b)) * 100}%` }}
-                />
-              </div>
-              <span className="w-6 text-left font-mono font-bold text-white text-[9px]">{s.b}</span>
-            </div>
-          ))}
-        </div>
-      </div>
-    ),
-  },
-  {
-    id: "settings",
-    label: "Settings",
-    content: (
-      <div className="p-3 text-left text-xs">
-        <div className="flex items-center gap-2 mb-3">
-          <span className="text-lg">⚙️</span>
-          <div>
-            <div className="font-bold text-white">Settings</div>
-            <div className="text-[9px] text-zinc-500">App preferences & info</div>
+          <div className="absolute top-2 left-2 flex items-center gap-1.5">
+            <span className="w-1.5 h-1.5 rounded-full bg-red-500 animate-pulse" />
+            <span className="text-[6px] font-bold text-white tracking-wider bg-black/60 px-1.5 py-0.5 rounded">LIVE</span>
+          </div>
+          <div className="absolute bottom-1 left-2 right-2 flex items-center justify-between">
+            <span className="text-[6px] text-white/80 bg-black/60 px-1.5 py-0.5 rounded">beIN SPORTS HD</span>
+            <span className="text-[6px] text-white/60 bg-black/60 px-1.5 py-0.5 rounded font-mono">42:15</span>
           </div>
         </div>
-        <div className="space-y-1 rounded-lg bg-white/5 overflow-hidden border border-white/5">
+        <div className="space-y-1">
           {[
-            { icon: "📤", label: "Share App", desc: "Share with friends" },
-            { icon: "⭐", label: "Rate App", desc: "Review on Play Store" },
-            { icon: "🔒", label: "Privacy Policy", desc: "How we handle data" },
-            { icon: "🌐", label: "Visit Website", desc: "footballeon.netlify.app" },
-            { icon: "ℹ️", label: "App Version", desc: "v1.0.0" },
-          ].map((s, i) => (
-            <div key={i} className="flex items-center gap-2.5 px-3 py-2.5 border-b border-white/5 last:border-0">
-              <span className="text-sm">{s.icon}</span>
-              <div>
-                <div className="font-semibold text-zinc-200 text-[10px]">{s.label}</div>
-                <div className="text-[8px] text-zinc-500">{s.desc}</div>
+            { ch: "Sky Sports PL", match: "Arsenal vs Chelsea", live: true },
+            { ch: "ESPN 2", match: "Barcelona vs Real Madrid", live: true },
+            { ch: "DAZN 1", match: "Bayern vs Dortmund (Upcoming)", live: false },
+          ].map((c, i) => (
+            <div key={i} className="flex items-center gap-2 rounded-lg bg-[#131814] p-2 border border-white/5">
+              <div className={`w-1 h-1 rounded-full ${c.live ? 'bg-red-500 animate-pulse' : 'bg-zinc-600'}`} />
+              <div className="flex-1 min-w-0">
+                <div className="font-bold text-white text-[8px] truncate">{c.ch}</div>
+                <div className="text-[7px] text-zinc-500 truncate">{c.match}</div>
               </div>
-              <span className="ml-auto text-zinc-600 text-[11px]">›</span>
+              {c.live && <span className="text-[6px] bg-red-500/20 text-red-400 px-1 rounded font-bold shrink-0">LIVE</span>}
             </div>
           ))}
         </div>
@@ -218,6 +204,7 @@ function PhoneFrame({ children, active }: { children: React.ReactNode; active?: 
 }
 
 export default function Home() {
+  useEffect(() => { trackVisit("website"); }, []);
   return (
     <>
       {/* Nav */}
