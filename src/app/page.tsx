@@ -1,5 +1,5 @@
 "use client";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import {
   Download,
   BarChart3,
@@ -175,18 +175,37 @@ function FootballLogoSvg({ className }: { className?: string }) {
   );
 }
 
-function PhoneFrame({ children, active }: { children: React.ReactNode; active?: boolean }) {
+function BannerCarousel() {
+  const [idx, setIdx] = useState(0);
+  useEffect(() => {
+    const t = setInterval(() => setIdx((p) => (p + 1) % phoneScreens.length), 3000);
+    return () => clearInterval(t);
+  }, []);
+  return (
+    <div className="relative z-10 shrink-0">
+      <div className="absolute -inset-20 bg-[#9FEF00] opacity-[0.03] blur-[100px] rounded-full" />
+      <PhoneFrame active tall>
+        <div className="p-3 text-left text-xs" key={idx}>
+          {phoneScreens[idx].content}
+        </div>
+      </PhoneFrame>
+      <div className="flex justify-center gap-1.5 mt-3">
+        {phoneScreens.map((_, i) => (
+          <button key={i} onClick={() => setIdx(i)} className={`w-1.5 h-1.5 rounded-full transition-all ${i === idx ? "bg-[#9FEF00] w-3" : "bg-zinc-700"}`} />
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function PhoneFrame({ children, active, tall }: { children: React.ReactNode; active?: boolean; tall?: boolean }) {
   return (
     <div className={`relative w-[260px] sm:w-[280px] ${active ? "animate-phone-float" : ""}`}>
-      {/* Phone body */}
       <div className="relative rounded-[32px] bg-zinc-900 p-2 shadow-2xl shadow-black/60 ring-1 ring-white/10">
-        {/* Notch */}
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-28 h-5 bg-black rounded-b-xl z-10 flex items-center justify-center gap-2">
           <div className="w-2 h-2 rounded-full bg-zinc-800" />
         </div>
-        {/* Screen */}
-        <div className="rounded-[24px] bg-[#080B08] overflow-hidden aspect-[9/19] relative">
-          {/* Status bar */}
+        <div className={`rounded-[24px] bg-[#080B08] overflow-hidden relative ${tall ? "h-[440px]" : "aspect-[9/19]"}`}>
           <div className="flex items-center justify-between px-5 pt-3 pb-1 text-[8px] text-white/60">
             <span>9:41</span>
             <div className="flex items-center gap-1">
@@ -194,10 +213,9 @@ function PhoneFrame({ children, active }: { children: React.ReactNode; active?: 
               <span>📶</span>
             </div>
           </div>
-          <div className="absolute inset-0 pt-7">{children}</div>
+          <div className="absolute inset-0 pt-7 overflow-y-auto scrollbar-hide">{children}</div>
         </div>
       </div>
-      {/* Reflection */}
       <div className="absolute inset-0 rounded-[32px] bg-gradient-to-t from-white/[0.03] to-transparent pointer-events-none" />
     </div>
   );
@@ -280,39 +298,8 @@ export default function Home() {
             </div>
           </div>
 
-          {/* Phone mockup */}
-          <div className="relative z-10 shrink-0">
-            <div className="absolute -inset-20 bg-[#9FEF00] opacity-[0.03] blur-[100px] rounded-full" />
-            <PhoneFrame active>
-              <div className="p-3 text-left text-xs">
-                <div className="flex items-center gap-1.5 mb-2">
-                  <span className="text-[#9FEF00] text-[10px]">●</span>
-                  <span className="font-bold text-white text-[9px] tracking-wider">LIVE MATCHES</span>
-                </div>
-                {[
-                  { home: "Arsenal", away: "Chelsea", score: "2-1", minute: "67'" },
-                  { home: "Barcelona", away: "Real Madrid", score: "1-1", minute: "42'" },
-                  { home: "Bayern", away: "Dortmund", score: "3-0", minute: "55'" },
-                  { home: "AC Milan", away: "Inter", score: "0-0", minute: "12'" },
-                ].map((m, i) => (
-                  <div key={i} className="animate-slide-up mb-1.5 rounded-lg bg-[#131814] p-2 border border-white/5" style={{ animationDelay: `${i * 0.1}s` }}>
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-2 flex-1 min-w-0">
-                        <span className="text-[7px] text-zinc-600 truncate">{m.home}</span>
-                      </div>
-                      <div className="flex items-center gap-1.5 px-2">
-                        <span className="font-bold text-[11px] text-white font-mono">{m.score}</span>
-                        <span className="text-[6px] bg-red-500/20 text-red-400 px-1 rounded font-bold">{m.minute}</span>
-                      </div>
-                      <div className="flex items-center gap-2 flex-1 min-w-0 justify-end">
-                        <span className="text-[7px] text-zinc-600 truncate">{m.away}</span>
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </PhoneFrame>
-          </div>
+          {/* Phone mockup — auto-rotating carousel */}
+          <BannerCarousel />
         </section>
 
         {/* Stats Bar */}
@@ -385,7 +372,7 @@ export default function Home() {
             <div className="flex flex-wrap justify-center gap-8 lg:gap-12">
               {phoneScreens.map((screen, i) => (
                 <div key={screen.id} className="flex flex-col items-center gap-4">
-                  <PhoneFrame>
+                  <PhoneFrame tall>
                     {screen.content}
                   </PhoneFrame>
                   <div className="flex items-center gap-2">
