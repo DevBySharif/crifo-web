@@ -205,9 +205,11 @@ function BannerCarousel() {
   );
 }
 
-function PhoneFrame({ children, active }: { children: React.ReactNode; active?: boolean }) {
+function PhoneFrame({ children, active, size = "hero" }: { children: React.ReactNode; active?: boolean; size?: "hero" | "preview" }) {
+  const widthClass = size === "hero" ? "w-[300px] sm:w-[380px]" : "w-[300px]";
+  const contentHeight = size === "hero" ? "max-h-[560px]" : "max-h-[480px]";
   return (
-    <div className={`relative w-[300px] sm:w-[380px] ${active ? "animate-phone-float" : ""}`}>
+    <div className={`relative ${widthClass} ${active ? "animate-phone-float" : ""}`}>
       <div className="relative rounded-[32px] bg-zinc-900 p-2 shadow-2xl shadow-black/60 ring-1 ring-white/10">
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-28 h-5 bg-black rounded-b-xl z-10 flex items-center justify-center gap-2">
           <div className="w-2 h-2 rounded-full bg-zinc-800" />
@@ -220,7 +222,7 @@ function PhoneFrame({ children, active }: { children: React.ReactNode; active?: 
               <span className="text-xs">📶</span>
             </div>
           </div>
-          <div className="overflow-y-auto scrollbar-hide max-h-[560px]">{children}</div>
+          <div className={`overflow-y-auto scrollbar-hide ${contentHeight}`}>{children}</div>
         </div>
       </div>
       <div className="absolute inset-0 rounded-[32px] bg-gradient-to-t from-white/[0.03] to-transparent pointer-events-none" />
@@ -376,10 +378,10 @@ export default function Home() {
                 Three screens that show everything you need
               </p>
             </div>
-            <div className="flex flex-wrap justify-center gap-8 lg:gap-12">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 justify-items-center">
               {phoneScreens.map((screen, i) => (
                 <div key={screen.id} className="flex flex-col items-center gap-4">
-                  <PhoneFrame>
+                  <PhoneFrame size="preview">
                     {screen.content}
                   </PhoneFrame>
                   <div className="flex items-center gap-2">
