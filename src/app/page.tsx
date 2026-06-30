@@ -245,14 +245,14 @@ export default function Home() {
     fetch("https://api.github.com/repos/DevBySharif/crifo-app/releases/latest")
       .then((r) => r.json())
       .then((data) => {
-        const arm64 = (data.assets ?? []).find((a: { name: string }) =>
-          a.name.includes("arm64")
+        const apk = (data.assets ?? []).find((a: { name: string }) =>
+          a.name.endsWith(".apk")
         );
-        if (arm64) {
+        if (apk) {
           setRelease({
-            apkUrl: arm64.browser_download_url,
+            apkUrl: apk.browser_download_url,
             version: (data.tag_name ?? "").replace(/^v/, ""),
-            sizeMb: (arm64.size / 1024 / 1024).toFixed(1) + " MB",
+            sizeMb: (apk.size / 1024 / 1024).toFixed(1) + " MB",
           });
         }
       })
