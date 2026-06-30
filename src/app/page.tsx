@@ -230,8 +230,34 @@ function PhoneFrame({ children, active, size = "hero" }: { children: React.React
   );
 }
 
+interface GhRelease {
+  apkUrl: string;
+  version: string;
+  sizeMb: string;
+}
+
 export default function Home() {
-  useEffect(() => { trackVisit("website"); }, []);
+  const [release, setRelease] = useState<GhRelease | null>(null);
+
+  useEffect(() => {
+    trackVisit("website");
+    // Fetch latest APK from GitHub Releases
+    fetch("https://api.github.com/repos/DevBySharif/crifo-app/releases/latest")
+      .then((r) => r.json())
+      .then((data) => {
+        const arm64 = (data.assets ?? []).find((a: { name: string }) =>
+          a.name.includes("arm64")
+        );
+        if (arm64) {
+          setRelease({
+            apkUrl: arm64.browser_download_url,
+            version: (data.tag_name ?? "").replace(/^v/, ""),
+            sizeMb: (arm64.size / 1024 / 1024).toFixed(1) + " MB",
+          });
+        }
+      })
+      .catch(() => {});
+  }, []);
   return (
     <>
       {/* Nav */}
@@ -285,7 +311,7 @@ export default function Home() {
             </p>
 
             <div className="flex flex-wrap justify-center lg:justify-start gap-3">
-              <a href="#download" className="inline-flex items-center gap-2.5 rounded-full bg-[#9FEF00] px-7 py-3.5 font-bold text-[#080B08] transition-all hover:bg-[#8BDE00] hover:scale-105 hover:shadow-xl hover:shadow-[#9FEF00]/30 text-base group">
+              <a href={release?.apkUrl ?? "#download"} download={!!release} className="inline-flex items-center gap-2.5 rounded-full bg-[#9FEF00] px-7 py-3.5 font-bold text-[#080B08] transition-all hover:bg-[#8BDE00] hover:scale-105 hover:shadow-xl hover:shadow-[#9FEF00]/30 text-base group">
                 <Download className="h-5 w-5 transition group-hover:-translate-y-0.5" />
                 Download APK
               </a>
@@ -436,19 +462,20 @@ export default function Home() {
               in your device settings.
             </p>
             <a
-              href="/app-lite-debug.apk"
-              download
-              className="inline-flex items-center gap-3 rounded-full bg-[#9FEF00] px-10 py-4 text-lg font-black text-[#080B08] shadow-2xl shadow-[#9FEF00]/30 transition-all hover:bg-[#8BDE00] hover:scale-105 hover:shadow-[#9FEF00]/40"
+              href={release?.apkUrl ?? "#"}
+              download={!!release}
+              aria-disabled={!release}
+              className="inline-flex items-center gap-3 rounded-full bg-[#9FEF00] px-10 py-4 text-lg font-black text-[#080B08] shadow-2xl shadow-[#9FEF00]/30 transition-all hover:bg-[#8BDE00] hover:scale-105 hover:shadow-[#9FEF00]/40 disabled:opacity-50"
             >
               <Download className="h-6 w-6" />
-              Download APK
+              {release ? "Download APK" : "Loading..."}
             </a>
             <div className="mt-6 flex items-center justify-center gap-6 text-sm text-zinc-600">
-              <span>Version 1.1.0</span>
+              <span>{release ? `Version ${release.version}` : "—"}</span>
               <span className="w-1 h-1 rounded-full bg-zinc-700" />
               <span>Android 8.0+</span>
               <span className="w-1 h-1 rounded-full bg-zinc-700" />
-              <span>20 MB</span>
+              <span>{release?.sizeMb ?? "—"}</span>
             </div>
           </div>
         </section>
