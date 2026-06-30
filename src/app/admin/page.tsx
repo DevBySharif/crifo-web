@@ -3,8 +3,8 @@
 import { useEffect, useState } from "react";
 
 const ADMIN_PASSWORD = "eon2026";
-const PROJECT = "footballeonofficial";
-const API_KEY = "AIzaSyDeInKnv3pCF4zQHmvqQLwcIAwzS9LKxbc";
+const PROJECT = "crifo-official";
+const API_KEY = "AIzaSyDYFP-ntXuXsHiQI3zYyBxPPlKBWPVzEBU";
 const BASE = `https://firestore.googleapis.com/v1/projects/${PROJECT}/databases/(default)/documents/visits`;
 
 interface Visit {

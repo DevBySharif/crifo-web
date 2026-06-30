@@ -17,8 +17,8 @@ export function trackVisit(source: "website" | "app_studio" | "app_lite", page?:
       },
     };
 
-    const projectId = "footballeonofficial";
-    const url = `https://firestore.googleapis.com/v1/projects/${projectId}/databases/(default)/documents/visits?key=AIzaSyDeInKnv3pCF4zQHmvqQLwcIAwzS9LKxbc`;
+    const projectId = "crifo-official";
+    const url = `https://firestore.googleapis.com/v1/projects/${projectId}/databases/(default)/documents/visits?key=AIzaSyDYFP-ntXuXsHiQI3zYyBxPPlKBWPVzEBU`;
 
     fetch(url, { method: "POST", body: JSON.stringify(body), headers: { "Content-Type": "application/json" } })
       .catch(() => {});
