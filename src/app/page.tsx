@@ -171,17 +171,21 @@ const phoneScreens = [
 function FootballLogoSvg({ className }: { className?: string }) {
   return (
     <svg viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg" className={className}>
-      <circle cx="60" cy="60" r="56" stroke="url(#limeGrad)" strokeWidth="3" />
-      <path d="M60 28L78 42L72 64H48L42 42L60 28Z" fill="url(#limeGrad)" fillOpacity="0.15" stroke="url(#limeGrad)" strokeWidth="2" strokeLinejoin="round" />
-      <path d="M60 45L72 54L68 70H52L48 54L60 45Z" fill="url(#limeGrad)" fillOpacity="0.1" stroke="url(#limeGrad)" strokeWidth="1.5" strokeLinejoin="round" />
-      <path d="M60 6L63 14L72 14L65 19L68 28L60 23L52 28L55 19L48 14L57 14L60 6Z" fill="#00B4FF" opacity="0.6" />
-      <circle cx="60" cy="60" r="50" stroke="#00B4FF" strokeOpacity="0.15" strokeWidth="0.5" />
       <defs>
-        <linearGradient id="limeGrad" x1="20" y1="20" x2="100" y2="100">
+        <linearGradient id="crifoBadge" x1="0" y1="0" x2="120" y2="120">
           <stop stopColor="#00B4FF" />
           <stop offset="1" stopColor="#0077FF" />
         </linearGradient>
       </defs>
+      <rect x="4" y="4" width="112" height="112" rx="28" fill="url(#crifoBadge)" />
+      <circle cx="60" cy="60" r="36" fill="#FFFFFF" />
+      <polygon points="60,46 73.3,55.7 68.2,71.3 51.8,71.3 46.7,55.7" fill="#0A2A4A" />
+      <line x1="60" y1="46" x2="60" y2="27" stroke="#0A2A4A" strokeWidth="3.6" strokeLinecap="round" />
+      <line x1="73.3" y1="55.7" x2="91" y2="49.5" stroke="#0A2A4A" strokeWidth="3.6" strokeLinecap="round" />
+      <line x1="68.2" y1="71.3" x2="79.5" y2="87" stroke="#0A2A4A" strokeWidth="3.6" strokeLinecap="round" />
+      <line x1="51.8" y1="71.3" x2="40.5" y2="87" stroke="#0A2A4A" strokeWidth="3.6" strokeLinecap="round" />
+      <line x1="46.7" y1="55.7" x2="29" y2="49.5" stroke="#0A2A4A" strokeWidth="3.6" strokeLinecap="round" />
+      <circle cx="60" cy="60" r="36" fill="none" stroke="#0A2A4A" strokeWidth="3.6" />
     </svg>
   );
 }
