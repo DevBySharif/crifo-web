@@ -118,7 +118,7 @@ export default function AdminPage() {
         <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
           <span style={{ fontSize: 24 }}>📊</span>
           <div>
-            <div style={{ fontSize: 16, fontWeight: 800 }}>Football Eon — Admin</div>
+            <div style={{ fontSize: 16, fontWeight: 800 }}>CriFO — Admin</div>
             <div style={{ fontSize: 10, color: "#9FEF00", fontWeight: 600 }}>{total} total · {uniqueDays} days</div>
           </div>
         </div>

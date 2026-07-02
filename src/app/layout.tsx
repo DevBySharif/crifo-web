@@ -8,13 +8,13 @@ const plusJakartaSans = Plus_Jakarta_Sans({
 });
 
 export const metadata: Metadata = {
-  title: "Football Eon — Live Football Scores",
+  title: "CriFO — Live Football Scores & Live TV",
   description:
-    "Download Football Eon for live scores, match details, and stats from Premier League, La Liga, Serie A, Bundesliga & more.",
+    "Download CriFO for live scores from 100+ leagues worldwide, match stats, lineups, H2H, plus 59+ built-in live TV sports channels. Free Android app.",
   openGraph: {
-    title: "Football Eon — Live Football Scores",
+    title: "CriFO — Live Football Scores & Live TV",
     description:
-      "Live scores & match details from top European leagues. Free Android app.",
+      "Live scores from 100+ leagues, full match details & built-in live TV. Free Android app.",
     type: "website",
   },
 };
