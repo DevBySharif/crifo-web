@@ -244,16 +244,23 @@ interface GhRelease {
   sizeMb: string;
 }
 
+// Self-hosted APK — reliable, no dependency on GitHub Releases.
+const SELF_HOSTED: GhRelease = {
+  apkUrl: "/crifo.apk",
+  version: "1.3.0",
+  sizeMb: "28.1 MB",
+};
+
 export default function Home() {
-  const [release, setRelease] = useState<GhRelease | null>(null);
+  const [release, setRelease] = useState<GhRelease | null>(SELF_HOSTED);
 
   useEffect(() => {
     trackVisit("website");
-    // Fetch latest APK from GitHub Releases
+    // Prefer a newer GitHub Release if one exists; otherwise keep self-hosted.
     fetch("https://api.github.com/repos/DevBySharif/crifo-app/releases/latest")
-      .then((r) => r.json())
+      .then((r) => (r.ok ? r.json() : null))
       .then((data) => {
-        const apk = (data.assets ?? []).find((a: { name: string }) =>
+        const apk = (data?.assets ?? []).find((a: { name: string }) =>
           a.name.endsWith(".apk")
         );
         if (apk) {
