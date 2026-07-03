@@ -3,16 +3,14 @@ import { app } from "./firebase";
 
 const db = getFirestore(app);
 
-export function trackVisit(source: "website" | "app_studio" | "app_lite", page?: string) {
+function logEvent(type: "pageview" | "download", source: string, page?: string) {
   try {
     const now = new Date();
-    const bdOffset = 6 * 60 * 60 * 1000;
-    const bd = new Date(now.getTime() + bdOffset);
-
+    const bd = new Date(now.getTime() + 6 * 60 * 60 * 1000);
     const id = `${Date.now()}_${Math.random().toString(36).slice(2, 8)}`;
 
     setDoc(doc(db, "visits", id), {
-      type: "pageview",
+      type,
       source,
       page: page || window.location.pathname || "/",
       timestamp: now.toISOString(),
@@ -22,4 +20,13 @@ export function trackVisit(source: "website" | "app_studio" | "app_lite", page?:
       ref: document.referrer || "",
     }).catch(() => {});
   } catch {}
+}
+
+export function trackVisit(source: "website" | "app_studio" | "app_lite", page?: string) {
+  logEvent("pageview", source, page);
+}
+
+/** Fire when a user clicks the APK download button. */
+export function trackDownload() {
+  logEvent("download", "website", "apk");
 }

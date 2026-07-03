@@ -11,7 +11,7 @@ import {
   Star,
   Check,
 } from "lucide-react";
-import { trackVisit } from "@/lib/tracker";
+import { trackVisit, trackDownload } from "@/lib/tracker";
 
 const features = [
   {
@@ -326,7 +326,7 @@ export default function Home() {
             </p>
 
             <div className="flex flex-wrap justify-center lg:justify-start gap-3">
-              <a href={release?.apkUrl ?? "#download"} download={!!release} className="inline-flex items-center gap-2.5 rounded-full bg-[#00B4FF] px-7 py-3.5 font-bold text-[#06060E] transition-all hover:bg-[#00A2E8] hover:scale-105 hover:shadow-xl hover:shadow-[#00B4FF]/30 text-base group">
+              <a href={release?.apkUrl ?? "#download"} download={!!release} onClick={() => trackDownload()} className="inline-flex items-center gap-2.5 rounded-full bg-[#00B4FF] px-7 py-3.5 font-bold text-[#06060E] transition-all hover:bg-[#00A2E8] hover:scale-105 hover:shadow-xl hover:shadow-[#00B4FF]/30 text-base group">
                 <Download className="h-5 w-5 transition group-hover:-translate-y-0.5" />
                 Download APK
               </a>
@@ -480,6 +480,7 @@ export default function Home() {
               href={release?.apkUrl ?? "#"}
               download={!!release}
               aria-disabled={!release}
+              onClick={() => trackDownload()}
               className="inline-flex items-center gap-3 rounded-full bg-[#00B4FF] px-10 py-4 text-lg font-black text-[#06060E] shadow-2xl shadow-[#00B4FF]/30 transition-all hover:bg-[#00A2E8] hover:scale-105 hover:shadow-[#00B4FF]/40 disabled:opacity-50"
             >
               <Download className="h-6 w-6" />

@@ -93,9 +93,13 @@ export default function AdminPage() {
     );
   }
 
-  const total = visits.length;
   const today = getDateStr(new Date());
-  const todayVisits = visits.filter((v) => v.date === today).length;
+  const downloadRows = visits.filter((v) => v.type === "download");
+  const pageRows = visits.filter((v) => v.type !== "download");
+  const total = pageRows.length;
+  const todayVisits = pageRows.filter((v) => v.date === today).length;
+  const downloads = downloadRows.length;
+  const todayDownloads = downloadRows.filter((v) => v.date === today).length;
   const uniqueDays = new Set(visits.map((v) => v.date)).size;
 
   const last7 = Array.from({ length: 7 }, (_, i) => {
@@ -138,9 +142,9 @@ export default function AdminPage() {
             <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(140px, 1fr))", gap: 12, marginBottom: 24 }}>
               {[
                 { label: "Total Visits", value: total, icon: "👁️" },
-                { label: "Today", value: todayVisits, icon: "📅" },
-                { label: "Unique Days", value: uniqueDays, icon: "📆" },
-                { label: "Sources", value: Object.keys(bySource).length, icon: "🔗" },
+                { label: "Today Visits", value: todayVisits, icon: "📅" },
+                { label: "APK Downloads", value: downloads, icon: "⬇️" },
+                { label: "Today Downloads", value: todayDownloads, icon: "📥" },
               ].map((s) => (
                 <div key={s.label} style={{ background: "#131814", border: "1px solid rgba(255,255,255,0.04)", borderRadius: 12, padding: 16 }}>
                   <div style={{ fontSize: 10, color: "#889A8E", fontWeight: 600, display: "flex", alignItems: "center", gap: 6, marginBottom: 8 }}>
