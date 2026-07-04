@@ -317,6 +317,25 @@ export default function Home() {
   }, []);
   return (
     <>
+      {/* Structured data — helps Google render a rich app result */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "SoftwareApplication",
+            name: "CriFO",
+            operatingSystem: "Android",
+            applicationCategory: "SportsApplication",
+            description:
+              "Free Android app for live football scores from 100+ leagues plus 1000+ built-in live TV channels.",
+            downloadUrl: "https://crifo.netlify.app/crifo.apk",
+            installUrl: "https://crifo.netlify.app/#download",
+            url: "https://crifo.netlify.app",
+            offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
+          }),
+        }}
+      />
       {/* Announcement banner + Nav (single fixed stack) */}
       <div className="fixed top-0 inset-x-0 z-50">
         <AnnouncementBanner />
