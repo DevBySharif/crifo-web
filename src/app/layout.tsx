@@ -57,6 +57,9 @@ export const metadata: Metadata = {
       "Live scores from 100+ leagues + 1000+ live TV channels. Free Android app.",
   },
   icons: { icon: "/icon.svg" },
+  verification: {
+    google: "Mtjq0xtNrSUWlpTjEP7FjvNxkftqwrxC8QG0Lt5aLNQ",
+  },
 };
 
 export default function RootLayout({
