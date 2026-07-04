@@ -22,7 +22,7 @@ const features = [
   {
     icon: Shield,
     title: "Live TV Built In",
-    desc: "59+ sports channels streaming inside the app — tap a match's TV channel and watch instantly",
+    desc: "1000+ live TV channels streaming inside the app — tap a match's channel and watch instantly",
   },
   {
     icon: Moon,
@@ -32,7 +32,7 @@ const features = [
   {
     icon: Zap,
     title: "Fast & Light",
-    desc: "Only ~16 MB, tuned for quick loading, smooth scrolling & minimal battery usage",
+    desc: "Only ~27 MB, tuned for quick loading, smooth scrolling & minimal battery usage",
   },
 ];
 
@@ -244,11 +244,12 @@ interface GhRelease {
   sizeMb: string;
 }
 
-// Self-hosted APK — reliable, no dependency on GitHub Releases.
+// Self-hosted APK is the single source of truth. The exact version is read
+// from /version.json at runtime so the site never advertises a stale build.
 const SELF_HOSTED: GhRelease = {
   apkUrl: "/crifo.apk",
-  version: "1.3.0",
-  sizeMb: "28.1 MB",
+  version: "1.4.3",
+  sizeMb: "27 MB",
 };
 
 export default function Home() {
@@ -256,19 +257,17 @@ export default function Home() {
 
   useEffect(() => {
     trackVisit("website");
-    // Prefer a newer GitHub Release if one exists; otherwise keep self-hosted.
-    fetch("https://api.github.com/repos/DevBySharif/crifo-app/releases/latest")
+    // Sync the displayed version with the freshly-deployed version.json.
+    // (No GitHub Releases dependency — that could serve an older APK than the
+    // self-hosted /crifo.apk we deploy with each release.)
+    fetch("/version.json", { cache: "no-store" })
       .then((r) => (r.ok ? r.json() : null))
       .then((data) => {
-        const apk = (data?.assets ?? []).find((a: { name: string }) =>
-          a.name.endsWith(".apk")
-        );
-        if (apk) {
-          setRelease({
-            apkUrl: apk.browser_download_url,
-            version: (data.tag_name ?? "").replace(/^v/, ""),
-            sizeMb: (apk.size / 1024 / 1024).toFixed(1) + " MB",
-          });
+        if (data?.versionName) {
+          setRelease((prev) => ({
+            ...(prev ?? SELF_HOSTED),
+            version: String(data.versionName),
+          }));
         }
       })
       .catch(() => {});
@@ -357,8 +356,8 @@ export default function Home() {
           <div className="mx-auto grid max-w-4xl grid-cols-2 gap-8 px-6 py-10 sm:grid-cols-4">
             {[
               { value: "100+", label: "Leagues Covered" },
-              { value: "59+", label: "Live TV Channels" },
-              { value: "16MB", label: "App Size" },
+              { value: "1000+", label: "Live TV Channels" },
+              { value: "27MB", label: "App Size" },
               { value: "Free", label: "No Ads / Premium" },
             ].map((s) => (
               <div key={s.label} className="text-center">
