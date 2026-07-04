@@ -12,6 +12,8 @@ import {
   Check,
 } from "lucide-react";
 import { trackVisit, trackDownload } from "@/lib/tracker";
+import { getFirestore, doc, getDoc } from "firebase/firestore";
+import { app } from "@/lib/firebase";
 
 const features = [
   {
@@ -168,6 +170,47 @@ const phoneScreens = [
   },
 ];
 
+// Reads config/site from Firestore (set in the admin panel) and shows a
+// dismissible banner at the top of the site when enabled.
+function AnnouncementBanner() {
+  const [text, setText] = useState("");
+  const [show, setShow] = useState(false);
+
+  useEffect(() => {
+    getDoc(doc(getFirestore(app), "config", "site"))
+      .then((snap) => {
+        if (!snap.exists()) return;
+        const d = snap.data();
+        const msg = String(d.announcement ?? "").trim();
+        if (d.announcementEnabled && msg) {
+          const dismissed = sessionStorage.getItem("ann_dismissed");
+          if (dismissed !== msg) {
+            setText(msg);
+            setShow(true);
+          }
+        }
+      })
+      .catch(() => {});
+  }, []);
+
+  if (!show) return null;
+  return (
+    <div className="w-full bg-gradient-to-r from-[#00B4FF] to-[#0077FF] text-[#06060E]">
+      <div className="mx-auto flex max-w-6xl items-center gap-3 px-6 py-2.5 text-sm font-semibold">
+        <span className="shrink-0">📣</span>
+        <span className="flex-1 text-center sm:text-left">{text}</span>
+        <button
+          aria-label="Dismiss"
+          onClick={() => { sessionStorage.setItem("ann_dismissed", text); setShow(false); }}
+          className="shrink-0 rounded-full px-2 py-0.5 text-[#06060E]/70 hover:text-[#06060E] hover:bg-black/10 transition"
+        >
+          ✕
+        </button>
+      </div>
+    </div>
+  );
+}
+
 function FootballLogoSvg({ className }: { className?: string }) {
   return (
     <svg viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg" className={className}>
@@ -274,8 +317,10 @@ export default function Home() {
   }, []);
   return (
     <>
-      {/* Nav */}
-      <nav className="fixed top-0 inset-x-0 z-50 border-b border-[#00B4FF]/10 bg-[#06060E]/80 backdrop-blur-2xl">
+      {/* Announcement banner + Nav (single fixed stack) */}
+      <div className="fixed top-0 inset-x-0 z-50">
+        <AnnouncementBanner />
+        <nav className="border-b border-[#00B4FF]/10 bg-[#06060E]/80 backdrop-blur-2xl">
         <div className="mx-auto flex max-w-6xl items-center justify-between px-6 h-16">
           <div className="flex items-center gap-3">
             <FootballLogoSvg className="w-8 h-8" />
@@ -290,7 +335,8 @@ export default function Home() {
             </a>
           </div>
         </div>
-      </nav>
+        </nav>
+      </div>
 
       <main>
         {/* HERO */}
