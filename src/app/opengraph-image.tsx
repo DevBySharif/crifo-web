@@ -1,4 +1,5 @@
 import { ImageResponse } from "next/og";
+import { LOGO_DATA_URI } from "@/lib/logo-data";
 
 export const dynamic = "force-static";
 export const alt = "CriFO — Live Football Scores & Live TV";
@@ -22,22 +23,14 @@ export default function OpengraphImage() {
         }}
       >
         <div style={{ display: "flex", alignItems: "center", gap: 24 }}>
-          <div
-            style={{
-              width: 96,
-              height: 96,
-              borderRadius: 24,
-              background: "linear-gradient(135deg, #00B4FF, #0077FF)",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              fontSize: 56,
-              fontWeight: 900,
-              color: "#06060E",
-            }}
-          >
-            C
-          </div>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={LOGO_DATA_URI}
+            width={96}
+            height={96}
+            style={{ borderRadius: 24 }}
+            alt="CriFO"
+          />
           <div style={{ display: "flex", fontSize: 96, fontWeight: 900, letterSpacing: -2 }}>
             <span>Cri</span>
             <span style={{ color: "#00B4FF" }}>FO</span>

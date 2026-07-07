@@ -1,1 +1,1 @@
-{"versionCode":10,"versionName":"1.4.4","apkUrl":"/crifo.apk","releaseNotes":"Fixed fullscreen: video now goes fullscreen correctly without rotating the whole app, and fullscreen works from the live-match player too. Smoother scores date bar. Faster, more reliable downloads."}
+{"versionCode":11,"versionName":"1.4.5","apkUrl":"/crifo.apk","releaseNotes":"Fullscreen actually works now — video no longer rotates the whole app, and it works from the live-match player too. New app icon. Smoother scores date bar."}

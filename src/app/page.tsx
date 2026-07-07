@@ -238,25 +238,8 @@ function AnnouncementBanner() {
 }
 
 function FootballLogoSvg({ className }: { className?: string }) {
-  return (
-    <svg viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg" className={className}>
-      <defs>
-        <linearGradient id="crifoBadge" x1="0" y1="0" x2="120" y2="120">
-          <stop stopColor="#00B4FF" />
-          <stop offset="1" stopColor="#0077FF" />
-        </linearGradient>
-      </defs>
-      <rect x="4" y="4" width="112" height="112" rx="28" fill="url(#crifoBadge)" />
-      <circle cx="60" cy="60" r="36" fill="#FFFFFF" />
-      <polygon points="60,46 73.3,55.7 68.2,71.3 51.8,71.3 46.7,55.7" fill="#0A2A4A" />
-      <line x1="60" y1="46" x2="60" y2="27" stroke="#0A2A4A" strokeWidth="3.6" strokeLinecap="round" />
-      <line x1="73.3" y1="55.7" x2="91" y2="49.5" stroke="#0A2A4A" strokeWidth="3.6" strokeLinecap="round" />
-      <line x1="68.2" y1="71.3" x2="79.5" y2="87" stroke="#0A2A4A" strokeWidth="3.6" strokeLinecap="round" />
-      <line x1="51.8" y1="71.3" x2="40.5" y2="87" stroke="#0A2A4A" strokeWidth="3.6" strokeLinecap="round" />
-      <line x1="46.7" y1="55.7" x2="29" y2="49.5" stroke="#0A2A4A" strokeWidth="3.6" strokeLinecap="round" />
-      <circle cx="60" cy="60" r="36" fill="none" stroke="#0A2A4A" strokeWidth="3.6" />
-    </svg>
-  );
+  // eslint-disable-next-line @next/next/no-img-element
+  return <img src="/brand/crifo-logo-512.png" alt="CriFO" className={`${className} rounded-[22%]`} />;
 }
 
 function BannerCarousel() {
