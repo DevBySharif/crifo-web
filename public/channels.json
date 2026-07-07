@@ -1,6 +1,6 @@
 {
 "version": 1,
-"count": 1088,
+"count": 1091,
 "channels": [
 {
 "id": "cmqpdhwpv001nh2qv704y720a",
@@ -7617,6 +7617,27 @@
 "category": "News",
 "streamUrl": "https://t.freetv.fun/live/zee-news.m3u8",
 "logoUrl": "https://static.wikia.nocookie.net/logopedia/images/5/5b/Zee_News_2025_%28full_red%29.svg"
+},
+{
+"id": "crifo00france24en0001",
+"name": "France 24 English",
+"category": "News",
+"streamUrl": "https://static.france24.com/live/F24_EN_LO_HLS/live_web.m3u8",
+"logoUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/17/France24.png/640px-France24.png"
+},
+{
+"id": "crifo00trtworld0000002",
+"name": "TRT World",
+"category": "News",
+"streamUrl": "https://tv-trtworld.medya.trt.com.tr/master.m3u8",
+"logoUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/TRT_World_logo.svg/640px-TRT_World_logo.svg.png"
+},
+{
+"id": "crifo00nasatv00000003",
+"name": "NASA TV",
+"category": "News",
+"streamUrl": "https://ntv1.akamaized.net/hls/live/2014075/NASA-NTV1-HLS/master.m3u8",
+"logoUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e5/NASA_logo.svg/640px-NASA_logo.svg.png"
 }
 ]
 }
