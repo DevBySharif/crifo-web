@@ -315,6 +315,8 @@ interface GhRelease {
 
 // Self-hosted APK is the single source of truth. The exact version is read
 // from /version.json at runtime so the site never advertises a stale build.
+const TELEGRAM_URL = "https://t.me/+IVx7FBC83L00MjM1";
+
 const SELF_HOSTED: GhRelease = {
   apkUrl: "/crifo.apk",
   version: "1.4.3",
@@ -627,6 +629,17 @@ export default function Home() {
               <span className="w-1 h-1 rounded-full bg-zinc-700" />
               <span>{release?.sizeMb ?? "—"}</span>
             </div>
+            <p className="mt-4 text-sm text-zinc-500">
+              Need help or found a bug?{" "}
+              <a
+                href={TELEGRAM_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-semibold text-[#00B4FF] hover:underline"
+              >
+                Join our Telegram
+              </a>
+            </p>
           </div>
         </section>
       </main>
@@ -638,6 +651,14 @@ export default function Home() {
             <FootballLogoSvg className="w-6 h-6" />
             <span className="font-bold text-white">Cri<span className="text-[#00B4FF]">FO</span></span>
           </div>
+          <a
+            href={TELEGRAM_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="font-semibold text-[#00B4FF] hover:underline"
+          >
+            Telegram Support
+          </a>
           <p>© 2026 CriFO</p>
           <p className="max-w-lg leading-relaxed text-xs">
             CriFO uses publicly available football data from public sports APIs. This app is not affiliated with, endorsed by, or sponsored by ESPN or any sports league. All trademarks belong to their respective owners.
