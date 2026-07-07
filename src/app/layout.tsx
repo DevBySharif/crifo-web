@@ -10,7 +10,7 @@ const plusJakartaSans = Plus_Jakarta_Sans({
 const SITE_URL = "https://crifo.netlify.app";
 const TITLE = "CriFO — Live Football Scores & 1000+ Live TV Channels";
 const DESCRIPTION =
-  "CriFO is a free Android app for live football scores from 100+ leagues — match stats, lineups, H2H & commentary — plus 1000+ built-in live TV channels. Download the APK.";
+  "Free Android app: live football scores from 100+ leagues, match stats, lineups & H2H, plus 1000+ built-in live TV channels. No ads. Download the APK.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),

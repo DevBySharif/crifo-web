@@ -10,6 +10,7 @@ import {
   ChevronRight,
   Star,
   Check,
+  HelpCircle,
 } from "lucide-react";
 import { trackVisit, trackDownload } from "@/lib/tracker";
 import { getFirestore, doc, getDoc } from "firebase/firestore";
@@ -45,6 +46,31 @@ const leagues = [
   { name: "La Liga", flag: "🇪🇸", color: "#febe00" },
   { name: "Serie A", flag: "🇮🇹", color: "#004694" },
   { name: "Bundesliga", flag: "🇩🇪", color: "#d20515" },
+];
+
+// Real, keyword-relevant Q&A. Doubles as indexable page content and a
+// FAQPage rich-result candidate in Google Search (see JSON-LD below).
+const faqs = [
+  {
+    q: "Is CriFO free to use?",
+    a: "Yes. CriFO is completely free — no ads, no premium tier, no in-app purchases. Every feature, including live TV, is unlocked from the first launch.",
+  },
+  {
+    q: "What leagues and competitions does CriFO cover?",
+    a: "100+ leagues and competitions worldwide — Premier League, La Liga, Serie A, Bundesliga, Champions League, the World Cup, and many domestic leagues across Asia, Africa, and the Americas.",
+  },
+  {
+    q: "Does CriFO have live TV channels?",
+    a: "Yes — 1000+ live TV channels are built into the app, covering sports, news, and entertainment. Tap a live match's \"Where to watch\" channel to start streaming instantly.",
+  },
+  {
+    q: "How do I install the CriFO APK?",
+    a: "Download the APK from the button above, open it, and enable \"Install from Unknown Sources\" if prompted. CriFO requires Android 8.0 or newer.",
+  },
+  {
+    q: "Is CriFO available on the Google Play Store?",
+    a: "Not currently — CriFO is distributed as a direct APK download from this website so updates can ship immediately without store review delays.",
+  },
 ];
 
 const phoneScreens = [
@@ -336,6 +362,20 @@ export default function Home() {
           }),
         }}
       />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            mainEntity: faqs.map((f) => ({
+              "@type": "Question",
+              name: f.q,
+              acceptedAnswer: { "@type": "Answer", text: f.a },
+            })),
+          }),
+        }}
+      />
       {/* Announcement banner + Nav (single fixed stack) */}
       <div className="fixed top-0 inset-x-0 z-50">
         <AnnouncementBanner />
@@ -349,6 +389,7 @@ export default function Home() {
           </div>
           <div className="flex items-center gap-3">
             <a href="#features" className="text-sm text-zinc-400 hover:text-white transition hidden sm:block">Features</a>
+            <a href="#faq" className="text-sm text-zinc-400 hover:text-white transition hidden sm:block">FAQ</a>
             <a href="#download" className="rounded-full bg-[#00B4FF] px-5 py-2 text-sm font-bold text-[#06060E] transition-all hover:bg-[#00A2E8] hover:scale-105 hover:shadow-lg hover:shadow-[#00B4FF]/30">
               Download
             </a>
@@ -520,6 +561,35 @@ export default function Home() {
                 <span className="text-sm font-semibold text-zinc-300 text-center leading-tight">{l.name}</span>
               </div>
             ))}
+          </div>
+        </section>
+
+        {/* FAQ */}
+        <section id="faq" className="border-y border-[#00B4FF]/8 bg-[#0E0E1C]/50">
+          <div className="mx-auto max-w-3xl px-6 py-24 sm:py-32">
+            <div className="mb-16 text-center">
+              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#00B4FF]/10 border border-[#00B4FF]/20 text-[#00B4FF] text-xs font-semibold mb-5 tracking-wider uppercase backdrop-blur-sm">
+                <HelpCircle className="w-3.5 h-3.5" />
+                FAQ
+              </div>
+              <h2 className="text-4xl font-extrabold tracking-tight sm:text-5xl text-white">
+                Frequently asked questions
+              </h2>
+            </div>
+            <div className="space-y-4">
+              {faqs.map((f) => (
+                <details
+                  key={f.q}
+                  className="group rounded-2xl border border-[#00B4FF]/8 bg-[#0E0E1C] p-6 open:border-[#00B4FF]/25"
+                >
+                  <summary className="flex cursor-pointer list-none items-center justify-between gap-4 font-bold text-white">
+                    {f.q}
+                    <ChevronRight className="h-4 w-4 shrink-0 text-[#00B4FF] transition-transform group-open:rotate-90" />
+                  </summary>
+                  <p className="mt-3 text-sm leading-relaxed text-zinc-400">{f.a}</p>
+                </details>
+              ))}
+            </div>
           </div>
         </section>
 
