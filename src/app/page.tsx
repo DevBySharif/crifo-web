@@ -300,7 +300,7 @@ interface GhRelease {
 // Update the tag in the URL when a new release is published.
 const TELEGRAM_URL = "https://t.me/+IVx7FBC83L00MjM1";
 const GH_RELEASE_APK_URL =
-  "https://github.com/DevBySharif/crifo-app/releases/latest/download/crifo.apk";
+  "https://github.com/DevBySharif/crifo-app/releases/latest/download/app-release.apk";
 
 const SELF_HOSTED: GhRelease = {
   apkUrl: GH_RELEASE_APK_URL,
