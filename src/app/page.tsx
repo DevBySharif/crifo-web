@@ -296,12 +296,14 @@ interface GhRelease {
   sizeMb: string;
 }
 
-// Self-hosted APK is the single source of truth. The exact version is read
-// from /version.json at runtime so the site never advertises a stale build.
+// APK is hosted on GitHub Releases — no large binary in the repo.
+// Update the tag in the URL when a new release is published.
 const TELEGRAM_URL = "https://t.me/+IVx7FBC83L00MjM1";
+const GH_RELEASE_APK_URL =
+  "https://github.com/DevBySharif/crifo-web/releases/latest/download/crifo.apk";
 
 const SELF_HOSTED: GhRelease = {
-  apkUrl: "/crifo.apk",
+  apkUrl: GH_RELEASE_APK_URL,
   version: "1.4.3",
   sizeMb: "27 MB",
 };
@@ -340,7 +342,7 @@ export default function Home() {
             applicationCategory: "SportsApplication",
             description:
               "Free Android app for live football scores from 100+ leagues plus 1000+ built-in live TV channels.",
-            downloadUrl: "https://crifo.netlify.app/crifo.apk",
+            downloadUrl: GH_RELEASE_APK_URL,
             installUrl: "https://crifo.netlify.app/#download",
             url: "https://crifo.netlify.app",
             offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
