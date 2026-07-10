@@ -1,7 +1,7 @@
 import { initializeApp, getApps } from "firebase/app";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyDYFP-ntXuXsHiQI3zYyBxPPlKBWPVzEBU",
+  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
   authDomain: "crifo-official.firebaseapp.com",
   projectId: "crifo-official",
   storageBucket: "crifo-official.firebasestorage.app",
