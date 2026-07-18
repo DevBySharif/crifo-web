@@ -17,4 +17,9 @@
   for = "/app-release.apk"
   [headers.values]
     Cache-Control = "no-cache, no-store, must-revalidate"
-    Content-Type = "application/vnd.android.package-archive""
+    Content-Type = "application/vnd.android.package-archive"
+
+[[headers]]
+  for = "/version.json"
+  [headers.values]
+    Cache-Control = "no-cache, no-store, must-revalidate""
