@@ -1,1 +1,6 @@
-{"versionCode":16,"versionName":"1.4.6","apkUrl":"/app-release.apk","releaseNotes":"Fix CI build (disable R8), fix update prompt (use real installed versionCode via package_info_plus)"}
+{
+  "versionCode": 16,
+  "versionName": "1.4.6",
+  "apkUrl": "https://crifo.netlify.app/app-release.apk",
+  "releaseNotes": ""
+}
