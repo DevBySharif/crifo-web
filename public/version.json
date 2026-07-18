@@ -1,1 +1,1 @@
-{"versionCode":15,"versionName":"1.4.6","apkUrl":"/app-release.apk","releaseNotes":"PageView swipe categories, slim chips, grouped channels, DUDE background loading"}
+{"versionCode":16,"versionName":"1.4.6","apkUrl":"/app-release.apk","releaseNotes":"Fix CI build (disable R8), fix update prompt (use real installed versionCode via package_info_plus)"}
