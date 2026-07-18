@@ -13,8 +13,6 @@ import {
   HelpCircle,
 } from "lucide-react";
 import { trackVisit, trackDownload } from "@/lib/tracker";
-import { getFirestore, doc, getDoc } from "firebase/firestore";
-import { app } from "@/lib/firebase";
 
 const features = [
   {
@@ -203,20 +201,24 @@ function AnnouncementBanner() {
   const [show, setShow] = useState(false);
 
   useEffect(() => {
-    getDoc(doc(getFirestore(app), "config", "site"))
-      .then((snap) => {
-        if (!snap.exists()) return;
-        const d = snap.data();
-        const msg = String(d.announcement ?? "").trim();
-        if (d.announcementEnabled && msg) {
-          const dismissed = sessionStorage.getItem("ann_dismissed");
-          if (dismissed !== msg) {
-            setText(msg);
-            setShow(true);
+      (async () => {
+        try {
+          const { getFirestore, doc, getDoc } = await import("firebase/firestore");
+          const { app } = await import("@/lib/firebase");
+          if (!app) return;
+          const snap = await getDoc(doc(getFirestore(app), "config", "site"));
+          if (!snap.exists()) return;
+          const d = snap.data();
+          const msg = String(d.announcement ?? "").trim();
+          if (d.announcementEnabled && msg) {
+            const dismissed = sessionStorage.getItem("ann_dismissed");
+            if (dismissed !== msg) {
+              setText(msg);
+              setShow(true);
+            }
           }
-        }
-      })
-      .catch(() => {});
+        } catch (_) {}
+      })();
   }, []);
 
   if (!show) return null;
@@ -303,7 +305,7 @@ const GH_RELEASE_APK_URL = "/app-release.apk";
 
 const SELF_HOSTED: GhRelease = {
   apkUrl: GH_RELEASE_APK_URL,
-  version: "1.4.3",
+  version: "1.4.6",
   sizeMb: "27 MB",
 };
 
@@ -312,16 +314,15 @@ export default function Home() {
 
   useEffect(() => {
     trackVisit("website");
-    // Sync the displayed version with the freshly-deployed version.json.
-    // (No GitHub Releases dependency — that could serve an older APK than the
-    // self-hosted /crifo.apk we deploy with each release.)
     fetch("/version.json", { cache: "no-store" })
       .then((r) => (r.ok ? r.json() : null))
       .then((data) => {
         if (data?.versionName) {
+          const vc = data.versionCode ?? Date.now();
           setRelease((prev) => ({
             ...(prev ?? SELF_HOSTED),
             version: String(data.versionName),
+            apkUrl: `${GH_RELEASE_APK_URL}?v=${vc}`,
           }));
         }
       })

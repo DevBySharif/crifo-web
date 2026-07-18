@@ -12,8 +12,8 @@ import {
 import { app } from "@/lib/firebase";
 
 const BLUE = "#00B4FF";
-const db = getFirestore(app);
-const auth = getAuth(app);
+function getDb() { return getFirestore(app!); }
+function getAuthInstance() { return getAuth(app!); }
 
 interface Visit {
   type: string;
@@ -29,7 +29,7 @@ interface Visit {
 // Reads visits via the authenticated Firestore SDK (respects security rules —
 // only the signed-in admin can read the collection).
 async function fetchVisits(): Promise<Visit[]> {
-  const q = query(collection(db, "visits"), orderBy("timestamp", "desc"), limit(2000));
+  const q = query(collection(getDb(), "visits"), orderBy("timestamp", "desc"), limit(2000));
   const snap = await getDocs(q);
   return snap.docs.map((d) => {
     const f = d.data() as Record<string, unknown>;
@@ -137,7 +137,7 @@ export default function AdminPage() {
 
   // Real Firebase Auth session (persisted by the SDK across reloads).
   useEffect(() => {
-    return onAuthStateChanged(auth, (u) => {
+    return onAuthStateChanged(getAuthInstance(), (u) => {
       setUser(u);
       setAuthReady(true);
     });
@@ -155,7 +155,7 @@ export default function AdminPage() {
       }
       setLoading(false);
       try {
-        const snap = await getDoc(doc(db, "config", "site"));
+        const snap = await getDoc(doc(getDb(), "config", "site"));
         if (snap.exists()) {
           const d = snap.data();
           setAnnText(String(d.announcement ?? ""));
@@ -171,7 +171,7 @@ export default function AdminPage() {
     setLoggingIn(true);
     setError("");
     try {
-      await signInWithEmailAndPassword(auth, email.trim(), password);
+      await signInWithEmailAndPassword(getAuthInstance(), email.trim(), password);
       // onAuthStateChanged will flip us into the dashboard.
     } catch (e) {
       const code = (e as { code?: string }).code ?? "";
@@ -190,7 +190,7 @@ export default function AdminPage() {
     setAnnSaving(true);
     setAnnSaved(false);
     try {
-      await setDoc(doc(db, "config", "site"), {
+      await setDoc(doc(getDb(), "config", "site"), {
         announcement: annText.trim(),
         announcementEnabled: annEnabled,
         updatedAt: new Date().toISOString(),
@@ -284,7 +284,7 @@ export default function AdminPage() {
         </div>
         <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
           <span style={{ fontSize: 11, color: "#52566b" }}>{user?.email}</span>
-          <button onClick={() => signOut(auth)}
+          <button onClick={() => signOut(getAuthInstance())}
             style={{ background: "rgba(239,68,68,0.1)", border: "1px solid rgba(239,68,68,0.25)", borderRadius: 8, padding: "7px 16px", fontSize: 11, fontWeight: 700, color: "#ef4444", cursor: "pointer" }}>Sign out</button>
         </div>
       </div>
