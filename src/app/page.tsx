@@ -69,6 +69,22 @@ const faqs = [
     q: "Is CriFO available on the Google Play Store?",
     a: "Not currently — CriFO is distributed as a direct APK download from this website so updates can ship immediately without store review delays.",
   },
+  {
+    q: "Is the CriFO APK safe to install?",
+    a: "Yes. CriFO is built by a small independent team, is free with no ads, and does not request unnecessary permissions. The APK is served directly from this website over HTTPS with an immutable checksum. You can verify the version and size on the download page before installing.",
+  },
+  {
+    q: "How do I update the app?",
+    a: "Download the latest APK from this website — updates ship instantly without Play Store review delays. The app shows the installed version, and you can check the current version and size in the download section on the homepage.",
+  },
+  {
+    q: "Does CriFO work on my phone?",
+    a: "CriFO requires Android 8.0 (Oreo) or newer. It is lightweight and works on most modern Android phones and tablets, with a dark and light theme for comfortable use.",
+  },
+  {
+    q: "Is live TV included for free?",
+    a: "Yes — 1000+ live TV channels are included with no subscription. Tap a live match's \"Where to watch\" channel to stream instantly. Availability can vary by region and network.",
+  },
 ];
 
 function FootballLogoSvg({ className }: { className?: string }) {
@@ -124,6 +140,12 @@ const organizationJsonLd = {
   sameAs: [TELEGRAM_URL],
   description:
     "CriFO is a free Android app for live football scores from 100+ leagues with 1000+ built-in live TV channels.",
+  contactPoint: {
+    "@type": "ContactPoint",
+    contactType: "customer support",
+    url: TELEGRAM_URL,
+    availableLanguage: "English",
+  },
 };
 
 export default function Home() {
@@ -413,6 +435,20 @@ export default function Home() {
           >
             Telegram Support
           </a>
+          <nav aria-label="Footer" className="flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-sm">
+            <a href="/about" className="text-zinc-400 transition-colors hover:text-white">
+              About
+            </a>
+            <a href="/contact" className="text-zinc-400 transition-colors hover:text-white">
+              Contact
+            </a>
+            <a href="/privacy" className="text-zinc-400 transition-colors hover:text-white">
+              Privacy Policy
+            </a>
+            <a href="/terms" className="text-zinc-400 transition-colors hover:text-white">
+              Terms
+            </a>
+          </nav>
           <p>© 2026 CriFO</p>
           <p className="max-w-lg leading-relaxed text-xs">
             CriFO uses publicly available football data from public sports APIs. This app is not affiliated with, endorsed by, or sponsored by ESPN or any sports league. All trademarks belong to their respective owners.

@@ -1,0 +1,11 @@
+# CriFO — Live Football Scores & 1000+ Live TV Channels
+
+> CriFO is a free Android app (direct APK download, no Play Store) delivering live football scores from 100+ leagues worldwide, full match stats, lineups, head-to-head history, ball-by-ball commentary, and 1000+ built-in live TV channels — all without ads.
+
+- [CriFO Home](https://crifo.netlify.app/): Live scores, match stats, live TV and the APK download.
+- [About CriFO](https://crifo.netlify.app/about): What CriFO is and why it exists.
+- [Contact](https://crifo.netlify.app/contact): Support and contact information.
+- [Privacy Policy](https://crifo.netlify.app/privacy): What data the app and site collect.
+- [Terms of Service](https://crifo.netlify.app/terms): Usage terms and disclaimer.
+
+Full details in [llms-full.txt](https://crifo.netlify.app/llms-full.txt).

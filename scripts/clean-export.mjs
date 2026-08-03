@@ -9,12 +9,15 @@ import { join } from "node:path";
 
 const ROOT = process.argv[2] ?? "out";
 
+// .txt files that are intentional public content and must be kept.
+const KEEP = new Set(["robots.txt", "llms.txt", "llms-full.txt"]);
+
 function walk(dir) {
   for (const entry of readdirSync(dir, { withFileTypes: true })) {
     const path = join(dir, entry.name);
     if (entry.isDirectory()) {
       walk(path);
-    } else if (entry.name.endsWith(".txt") && entry.name !== "robots.txt") {
+    } else if (entry.name.endsWith(".txt") && !KEEP.has(entry.name)) {
       rmSync(path);
       console.log(`clean-export: removed ${path}`);
     }
