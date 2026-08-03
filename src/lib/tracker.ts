@@ -1,4 +1,7 @@
+const FIREBASE_ENABLED = Boolean(process.env.NEXT_PUBLIC_FIREBASE_API_KEY);
+
 async function getDb() {
+  if (!FIREBASE_ENABLED) return null;
   try {
     const [{ getFirestore }, { app }] = await Promise.all([
       import("firebase/firestore"),

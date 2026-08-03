@@ -4,7 +4,18 @@ export const dynamic = "force-static";
 
 export default function robots(): MetadataRoute.Robots {
   return {
-    rules: [{ userAgent: "*", allow: "/", disallow: "/admin" }],
+    rules: [
+      {
+        userAgent: "*",
+        allow: "/",
+        disallow: [
+          "/admin",
+          "/channels.json",
+          "/app-release.apk",
+          "/version.json",
+        ],
+      },
+    ],
     sitemap: "https://crifo.netlify.app/sitemap.xml",
     host: "https://crifo.netlify.app",
   };

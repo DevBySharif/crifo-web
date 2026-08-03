@@ -6,7 +6,7 @@ function validateEnv() {
     ["NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN", process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN],
     ["NEXT_PUBLIC_FIREBASE_PROJECT_ID", process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID],
   ] as const;
-  const missing = required.filter(([_, v]) => !v);
+  const missing = required.filter(([, v]) => !v);
   if (missing.length > 0 && typeof window !== "undefined") {
     console.warn(
       `Firebase: missing env vars — ${missing.map(([n]) => n).join(", ")}`

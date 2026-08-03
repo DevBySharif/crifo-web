@@ -216,7 +216,8 @@ export default function AdminPage() {
     const conversion = total ? ((downloads / total) * 100).toFixed(1) : "0";
     const avgPerDay = uniqueDays ? Math.round(total / uniqueDays) : 0;
 
-    const days = Array.from({ length: range }, (_, i) => getDateStr(new Date(Date.now() - i * 86400000))).reverse();
+    const anchor = new Date(`${today}T00:00:00Z`).getTime();
+    const days = Array.from({ length: range }, (_, i) => getDateStr(new Date(anchor - i * 86400000))).reverse();
     const series = days.map((d) => ({
       date: d,
       visits: pageRows.filter((v) => v.date === d).length,

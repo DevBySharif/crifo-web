@@ -1,7 +1,4 @@
-"use client";
-import { useEffect, useState } from "react";
 import {
-  Download,
   BarChart3,
   Moon,
   Zap,
@@ -9,10 +6,15 @@ import {
   Sparkles,
   ChevronRight,
   Star,
-  Check,
   HelpCircle,
+  Download,
 } from "lucide-react";
-import { trackVisit, trackDownload } from "@/lib/tracker";
+import AnnouncementBanner from "@/components/announcement-banner";
+import BannerCarousel from "@/components/banner-carousel";
+import { DownloadButton, DownloadMeta } from "@/components/download";
+import SiteAnalytics from "@/components/site-analytics";
+import { phoneScreens } from "@/lib/phone-screens";
+import { SITE_URL, TELEGRAM_URL, APK_PATH } from "@/lib/site";
 
 const features = [
   {
@@ -33,7 +35,7 @@ const features = [
   {
     icon: Zap,
     title: "Fast & Light",
-    desc: "Only ~27 MB, tuned for quick loading, smooth scrolling & minimal battery usage",
+    desc: "Tuned for quick loading, smooth scrolling & minimal battery usage",
   },
 ];
 
@@ -46,8 +48,6 @@ const leagues = [
   { name: "Bundesliga", flag: "🇩🇪", color: "#d20515" },
 ];
 
-// Real, keyword-relevant Q&A. Doubles as indexable page content and a
-// FAQPage rich-result candidate in Google Search (see JSON-LD below).
 const faqs = [
   {
     q: "Is CriFO free to use?",
@@ -71,317 +71,97 @@ const faqs = [
   },
 ];
 
-const phoneScreens = [
-  {
-    id: "home",
-    label: "Home",
-    content: (
-      <div className="p-4 text-left text-sm">
-        <div className="flex items-center justify-between mb-4">
-          <div className="font-extrabold text-[#00B4FF] text-lg tracking-wide">CriFO</div>
-          <div className="flex items-center gap-2">
-            <span className="text-[9px] bg-red-500/15 text-red-400 border border-red-500/30 px-2.5 py-1 rounded-full font-bold">● LIVE</span>
-            <span className="w-7 h-7 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-[11px]">☀</span>
-          </div>
-        </div>
-        <div className="flex items-center gap-1.5 mb-3">
-          <span className="text-red-400 text-[10px]">▎</span>
-          <span className="font-bold text-white text-xs tracking-wider">LIVE NOW</span>
-          <span className="ml-auto text-[10px] bg-red-500/20 text-red-400 px-2.5 py-0.5 rounded font-bold">3</span>
-        </div>
-        {[
-          { home: "Arsenal", away: "Chelsea", score: "2-1", minute: "67'" },
-          { home: "Barcelona", away: "Real Madrid", score: "1-1", minute: "42'" },
-          { home: "Bayern", away: "Dortmund", score: "3-0", minute: "55'" },
-        ].map((m, i) => (
-          <div key={i} className="mb-2 rounded-lg bg-[#0E0E1C] p-3 border border-white/5">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-2 flex-1 min-w-0">
-                <span className="text-[13px] text-zinc-300 font-medium truncate">{m.home}</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <span className="font-bold text-base text-white font-mono">{m.score}</span>
-                <span className="text-[10px] bg-red-500/20 text-red-400 px-2 py-0.5 rounded font-bold">{m.minute}</span>
-              </div>
-              <div className="flex items-center gap-2 flex-1 min-w-0 justify-end">
-                <span className="text-[13px] text-zinc-300 font-medium truncate">{m.away}</span>
-              </div>
-            </div>
-          </div>
-        ))}
-        <div className="mt-3 rounded-lg bg-[#0E0E1C] p-3.5 border border-dashed border-white/5">
-          <div className="text-[10px] text-zinc-600 text-center font-medium">⬆ Scroll for more matches</div>
-        </div>
-      </div>
-    ),
-  },
-  {
-    id: "score",
-    label: "Score",
-    content: (
-      <div className="p-4 text-left text-sm">
-        <div className="flex items-center gap-1.5 mb-3">
-          <span className="font-extrabold text-[#00B4FF] text-sm tracking-widest">SCORES</span>
-          <span className="ml-auto text-[10px] text-zinc-500 bg-white/5 px-2.5 py-0.5 rounded">📅 Today</span>
-        </div>
-        <div className="flex gap-1.5 mb-3">
-          {["28","29","30","1","2","3","4"].map((d, i) => (
-            <div key={i} className={`flex-1 rounded-lg py-1.5 text-center text-[10px] font-bold ${i === 4 ? "bg-[#00B4FF] text-white" : "bg-white/5 text-zinc-500 border border-white/5"}`}>{d}</div>
-          ))}
-        </div>
-        {[
-          { l: "🏴󠁧󠁢󠁥󠁮󠁧󠁿 Premier League", matches: [{ a: "Arsenal", b: "Chelsea", s: "2-1" }, { a: "Man City", b: "Liverpool", s: "3-0" }] },
-          { l: "🇪🇸 La Liga", matches: [{ a: "Barcelona", b: "Real Madrid", s: "1-1" }, { a: "Atletico", b: "Sevilla", s: "0-0" }] },
-        ].map((lg, i) => (
-          <div key={i} className="mb-3 rounded-lg bg-[#0E0E1C] p-3 border border-white/5">
-            <div className="flex items-center gap-1.5 mb-2.5">
-              <span className="text-xs font-semibold">{lg.l}</span>
-              <span className="ml-auto text-[9px] bg-white/5 text-zinc-500 px-2 py-0.5 rounded">{lg.matches.length} matches</span>
-            </div>
-            {lg.matches.map((m, j) => (
-              <div key={j} className="flex items-center justify-between py-1.5 text-xs border-t border-white/5 first:border-t-0">
-                <span className="text-zinc-300 w-20 truncate font-medium">{m.a}</span>
-                <span className="font-bold text-white font-mono text-sm">{m.s}</span>
-                <span className="text-zinc-300 w-20 truncate text-right font-medium">{m.b}</span>
-              </div>
-            ))}
-          </div>
-        ))}
-      </div>
-    ),
-  },
-  {
-    id: "livetv",
-    label: "Live TV",
-    content: (
-      <div className="p-4 text-left text-sm">
-        <div className="relative mb-4 rounded-xl bg-black overflow-hidden border border-white/5">
-          <div className="aspect-video flex items-center justify-center bg-gradient-to-br from-zinc-900 to-black">
-            <div className="text-center">
-              <div className="text-4xl mb-2">📺</div>
-              <div className="text-[11px] text-zinc-500 font-mono tracking-widest">LIVE STREAM</div>
-            </div>
-          </div>
-          <div className="absolute top-2 left-2 flex items-center gap-1.5">
-            <span className="w-3 h-3 rounded-full bg-red-500 animate-pulse" />
-            <span className="text-[9px] font-bold text-white tracking-wider bg-black/70 px-2.5 py-0.5 rounded">LIVE</span>
-          </div>
-          <div className="absolute bottom-2 left-3 right-3 flex items-center justify-between">
-            <span className="text-[9px] text-white/90 bg-black/70 px-2.5 py-0.5 rounded font-medium">beIN SPORTS HD 1</span>
-            <span className="text-[9px] text-white/70 bg-black/70 px-2.5 py-0.5 rounded font-mono">42:15</span>
-          </div>
-        </div>
-        <div className="space-y-2">
-          {[
-            { ch: "Sky Sports PL", match: "Arsenal vs Chelsea", live: true },
-            { ch: "ESPN 2", match: "Barcelona vs Real Madrid", live: true },
-            { ch: "DAZN 1", match: "Bayern vs Dortmund", live: false },
-            { ch: "CBS Sports", match: "AC Milan vs Inter", live: false },
-          ].map((c, i) => (
-            <div key={i} className="flex items-center gap-3 rounded-lg bg-[#0E0E1C] p-3 border border-white/5">
-              <div className={`w-3 h-3 rounded-full shrink-0 ${c.live ? 'bg-red-500 animate-pulse' : 'bg-zinc-600'}`} />
-              <div className="flex-1 min-w-0">
-                <div className="font-bold text-white text-xs truncate">{c.ch}</div>
-                <div className="text-[10px] text-zinc-500 truncate">{c.match}</div>
-              </div>
-              {c.live && <span className="text-[9px] bg-red-500/20 text-red-400 px-2.5 py-0.5 rounded font-bold shrink-0">LIVE</span>}
-              {!c.live && <span className="text-[9px] bg-zinc-800 text-zinc-500 px-2.5 py-0.5 rounded shrink-0">UPCOMING</span>}
-            </div>
-          ))}
-        </div>
-      </div>
-    ),
-  },
-];
-
-// Reads config/site from Firestore (set in the admin panel) and shows a
-// dismissible banner at the top of the site when enabled.
-function AnnouncementBanner() {
-  const [text, setText] = useState("");
-  const [show, setShow] = useState(false);
-
-  useEffect(() => {
-      (async () => {
-        try {
-          const { getFirestore, doc, getDoc } = await import("firebase/firestore");
-          const { app } = await import("@/lib/firebase");
-          if (!app) return;
-          const snap = await getDoc(doc(getFirestore(app), "config", "site"));
-          if (!snap.exists()) return;
-          const d = snap.data();
-          const msg = String(d.announcement ?? "").trim();
-          if (d.announcementEnabled && msg) {
-            const dismissed = sessionStorage.getItem("ann_dismissed");
-            if (dismissed !== msg) {
-              setText(msg);
-              setShow(true);
-            }
-          }
-        } catch (_) {}
-      })();
-  }, []);
-
-  if (!show) return null;
-  return (
-    <div className="w-full bg-gradient-to-r from-[#00B4FF] to-[#0077FF] text-[#06060E]">
-      <div className="mx-auto flex max-w-6xl items-center gap-3 px-6 py-2.5 text-sm font-semibold">
-        <span className="shrink-0">📣</span>
-        <span className="flex-1 text-center sm:text-left">{text}</span>
-        <button
-          aria-label="Dismiss"
-          onClick={() => { sessionStorage.setItem("ann_dismissed", text); setShow(false); }}
-          className="shrink-0 rounded-full px-2 py-0.5 text-[#06060E]/70 hover:text-[#06060E] hover:bg-black/10 transition"
-        >
-          ✕
-        </button>
-      </div>
-    </div>
-  );
-}
-
 function FootballLogoSvg({ className }: { className?: string }) {
   // eslint-disable-next-line @next/next/no-img-element
-  return <img src="/brand/crifo-logo-512.png" alt="CriFO" className={`${className} rounded-[22%]`} />;
+  return <img src="/brand/crifo-logo-512.png" alt="CriFO logo" width={512} height={512} className={`${className} rounded-[22%]`} />;
 }
 
-function BannerCarousel() {
-  const [idx, setIdx] = useState(0);
-  useEffect(() => {
-    const t = setInterval(() => setIdx((p) => (p + 1) % phoneScreens.length), 3000);
-    return () => clearInterval(t);
-  }, []);
-  return (
-    <div className="relative z-10 shrink-0">
-      <div className="absolute -inset-20 bg-[#00B4FF] opacity-[0.03] blur-[100px] rounded-full" />
-      <PhoneFrame active>
-        <div key={idx}>
-          {phoneScreens[idx].content}
-        </div>
-      </PhoneFrame>
-      <div className="flex justify-center gap-1.5 mt-3">
-        {phoneScreens.map((_, i) => (
-          <button key={i} onClick={() => setIdx(i)} className={`w-1.5 h-1.5 rounded-full transition-all ${i === idx ? "bg-[#00B4FF] w-3" : "bg-zinc-700"}`} />
-        ))}
-      </div>
-    </div>
-  );
-}
+const softwareJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  name: "CriFO",
+  operatingSystem: "Android 8.0+",
+  applicationCategory: "SportsApplication",
+  description:
+    "Free Android app for live football scores from 100+ leagues plus 1000+ built-in live TV channels.",
+  url: SITE_URL,
+  downloadUrl: `${SITE_URL}${APK_PATH}`,
+  installUrl: `${SITE_URL}/#download`,
+  offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
+  publisher: {
+    "@type": "Organization",
+    name: "CriFO",
+    url: SITE_URL,
+    logo: {
+      "@type": "ImageObject",
+      url: `${SITE_URL}/brand/crifo-logo-512.png`,
+    },
+  },
+  sameAs: [TELEGRAM_URL],
+};
 
-function PhoneFrame({ children, active, size = "hero" }: { children: React.ReactNode; active?: boolean; size?: "hero" | "preview" }) {
-  const widthClass = "w-[300px]";
-  const contentHeight = "h-[480px]";
-  return (
-    <div className={`relative ${widthClass} ${active ? "animate-phone-float" : ""}`}>
-      <div className="relative rounded-[32px] bg-zinc-900 p-2 shadow-2xl shadow-black/60 ring-1 ring-white/10">
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-28 h-5 bg-black rounded-b-xl z-10 flex items-center justify-center gap-2">
-          <div className="w-2 h-2 rounded-full bg-zinc-800" />
-        </div>
-        <div className="rounded-[24px] bg-[#06060E] overflow-hidden relative">
-          <div className="flex items-center justify-between px-5 pt-3 pb-1 text-[10px] text-white/60 bg-[#06060E] sticky top-0 z-10">
-            <span className="font-semibold">9:41</span>
-            <div className="flex items-center gap-1">
-              <div className="w-4 h-2.5 rounded-sm border border-white/30 relative"><div className="absolute inset-0.5 rounded-sm bg-white/40" /></div>
-              <span className="text-xs">📶</span>
-            </div>
-          </div>
-          <div className={`overflow-y-auto scrollbar-hide ${contentHeight}`}>{children}</div>
-        </div>
-      </div>
-      <div className="absolute inset-0 rounded-[32px] bg-gradient-to-t from-white/[0.03] to-transparent pointer-events-none" />
-    </div>
-  );
-}
+const faqJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: faqs.map((f) => ({
+    "@type": "Question",
+    name: f.q,
+    acceptedAnswer: { "@type": "Answer", text: f.a },
+  })),
+};
 
-interface GhRelease {
-  apkUrl: string;
-  version: string;
-  sizeMb: string;
-}
-
-// APK is hosted on GitHub Releases — no large binary in the repo.
-// Update the tag in the URL when a new release is published.
-const TELEGRAM_URL = "https://t.me/+IVx7FBC83L00MjM1";
-const GH_RELEASE_APK_URL = "/app-release.apk";
-
-const SELF_HOSTED: GhRelease = {
-  apkUrl: GH_RELEASE_APK_URL,
-  version: "1.4.6",
-  sizeMb: "27 MB",
+const organizationJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  name: "CriFO",
+  url: SITE_URL,
+  logo: {
+    "@type": "ImageObject",
+    url: `${SITE_URL}/brand/crifo-logo-512.png`,
+    width: 512,
+    height: 512,
+  },
+  sameAs: [TELEGRAM_URL],
+  description:
+    "CriFO is a free Android app for live football scores from 100+ leagues with 1000+ built-in live TV channels.",
 };
 
 export default function Home() {
-  const [release, setRelease] = useState<GhRelease | null>(SELF_HOSTED);
-
-  useEffect(() => {
-    trackVisit("website");
-    fetch("/version.json", { cache: "no-store" })
-      .then((r) => (r.ok ? r.json() : null))
-      .then((data) => {
-        if (data?.versionName) {
-          const vc = data.versionCode ?? Date.now();
-          setRelease((prev) => ({
-            ...(prev ?? SELF_HOSTED),
-            version: String(data.versionName),
-            apkUrl: `${GH_RELEASE_APK_URL}?v=${vc}`,
-          }));
-        }
-      })
-      .catch(() => {});
-  }, []);
   return (
     <>
-      {/* Structured data — helps Google render a rich app result */}
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "SoftwareApplication",
-            name: "CriFO",
-            operatingSystem: "Android",
-            applicationCategory: "SportsApplication",
-            description:
-              "Free Android app for live football scores from 100+ leagues plus 1000+ built-in live TV channels.",
-            downloadUrl: GH_RELEASE_APK_URL,
-            installUrl: "https://crifo.netlify.app/#download",
-            url: "https://crifo.netlify.app",
-            offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
-          }),
-        }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(softwareJsonLd) }}
       />
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "FAQPage",
-            mainEntity: faqs.map((f) => ({
-              "@type": "Question",
-              name: f.q,
-              acceptedAnswer: { "@type": "Answer", text: f.a },
-            })),
-          }),
-        }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
       />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
+      />
+      <SiteAnalytics />
+
       {/* Announcement banner + Nav (single fixed stack) */}
       <div className="fixed top-0 inset-x-0 z-50">
         <AnnouncementBanner />
         <nav className="border-b border-[#00B4FF]/10 bg-[#06060E]/80 backdrop-blur-2xl">
-        <div className="mx-auto flex max-w-6xl items-center justify-between px-6 h-16">
-          <div className="flex items-center gap-3">
-            <FootballLogoSvg className="w-8 h-8" />
-            <span className="text-base font-extrabold tracking-tight text-white">
-              Cri<span className="text-[#00B4FF]">FO</span>
-            </span>
+          <div className="mx-auto flex max-w-6xl items-center justify-between px-6 h-16">
+            <div className="flex items-center gap-3">
+              <FootballLogoSvg className="w-8 h-8" />
+              <span className="text-base font-extrabold tracking-tight text-white">
+                Cri<span className="text-[#00B4FF]">FO</span>
+              </span>
+            </div>
+            <div className="flex items-center gap-3">
+              <a href="#features" className="text-sm text-zinc-400 hover:text-white transition hidden sm:block">Features</a>
+              <a href="#faq" className="text-sm text-zinc-400 hover:text-white transition hidden sm:block">FAQ</a>
+              <a href="#download" className="rounded-full bg-[#00B4FF] px-5 py-2 text-sm font-bold text-[#06060E] transition-all hover:bg-[#00A2E8] hover:scale-105 hover:shadow-lg hover:shadow-[#00B4FF]/30">
+                Download
+              </a>
+            </div>
           </div>
-          <div className="flex items-center gap-3">
-            <a href="#features" className="text-sm text-zinc-400 hover:text-white transition hidden sm:block">Features</a>
-            <a href="#faq" className="text-sm text-zinc-400 hover:text-white transition hidden sm:block">FAQ</a>
-            <a href="#download" className="rounded-full bg-[#00B4FF] px-5 py-2 text-sm font-bold text-[#06060E] transition-all hover:bg-[#00A2E8] hover:scale-105 hover:shadow-lg hover:shadow-[#00B4FF]/30">
-              Download
-            </a>
-          </div>
-        </div>
         </nav>
       </div>
 
@@ -392,7 +172,7 @@ export default function Home() {
           <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-[#06060E] via-[#0A0F22] to-[#06060E]" />
           <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_40%_50%,_#00B4FF_0%,_transparent_60%)] opacity-[0.05]" />
           <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_60%_50%,_#2563eb_0%,_transparent_60%)] opacity-[0.03]" />
-          
+
           {/* Stadium light effect */}
           <div className="pointer-events-none absolute inset-0 animate-stadium-light bg-gradient-to-r from-transparent via-[#00B4FF] to-transparent blur-3xl" />
 
@@ -414,14 +194,11 @@ export default function Home() {
             </h1>
 
             <p className="mb-8 text-base leading-relaxed text-zinc-400 sm:text-lg">
-              Live scores from 100+ leagues worldwide, full match details & built-in live TV — all in one free app.
+              Live football scores from 100+ leagues worldwide, match stats & built-in live TV — all in one free Android app.
             </p>
 
             <div className="flex flex-wrap justify-center lg:justify-start gap-3">
-              <a href={release?.apkUrl ?? "#download"} download={!!release} onClick={() => trackDownload()} className="inline-flex items-center gap-2.5 rounded-full bg-[#00B4FF] px-7 py-3.5 font-bold text-[#06060E] transition-all hover:bg-[#00A2E8] hover:scale-105 hover:shadow-xl hover:shadow-[#00B4FF]/30 text-base group">
-                <Download className="h-5 w-5 transition group-hover:-translate-y-0.5" />
-                Download APK
-              </a>
+              <DownloadButton variant="hero" />
               <a href="#features" className="inline-flex items-center gap-2 rounded-full border border-zinc-700/50 bg-[#0E0E1C] px-7 py-3.5 font-semibold text-zinc-300 transition-all hover:bg-[#16172E] hover:border-zinc-600 text-base">
                 Explore
                 <ChevronRight className="h-4 w-4" />
@@ -441,7 +218,7 @@ export default function Home() {
           </div>
 
           {/* Phone mockup — auto-rotating carousel */}
-          <BannerCarousel />
+          <BannerCarousel screens={phoneScreens} />
         </section>
 
         {/* Stats Bar */}
@@ -450,7 +227,7 @@ export default function Home() {
             {[
               { value: "100+", label: "Leagues Covered" },
               { value: "1000+", label: "Live TV Channels" },
-              { value: "27MB", label: "App Size" },
+              { value: "68MB", label: "App Size" },
               { value: "Free", label: "No Ads / Premium" },
             ].map((s) => (
               <div key={s.label} className="text-center">
@@ -512,11 +289,11 @@ export default function Home() {
               </p>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 justify-items-center">
-              {phoneScreens.map((screen, i) => (
+              {phoneScreens.map((screen) => (
                 <div key={screen.id} className="flex flex-col items-center gap-4">
-                  <PhoneFrame size="preview">
+                  <PhoneFrameStatic>
                     {screen.content}
-                  </PhoneFrame>
+                  </PhoneFrameStatic>
                   <div className="flex items-center gap-2">
                     <span className="w-1.5 h-1.5 rounded-full bg-[#00B4FF]" />
                     <span className="text-sm font-semibold text-zinc-300">{screen.label}</span>
@@ -597,23 +374,8 @@ export default function Home() {
               </span>{" "}
               in your device settings.
             </p>
-            <a
-              href={release?.apkUrl ?? "#"}
-              download={!!release}
-              aria-disabled={!release}
-              onClick={() => trackDownload()}
-              className="inline-flex items-center gap-3 rounded-full bg-[#00B4FF] px-10 py-4 text-lg font-black text-[#06060E] shadow-2xl shadow-[#00B4FF]/30 transition-all hover:bg-[#00A2E8] hover:scale-105 hover:shadow-[#00B4FF]/40 disabled:opacity-50"
-            >
-              <Download className="h-6 w-6" />
-              {release ? "Download APK" : "Loading..."}
-            </a>
-            <div className="mt-6 flex items-center justify-center gap-6 text-sm text-zinc-600">
-              <span>{release ? `Version ${release.version}` : "—"}</span>
-              <span className="w-1 h-1 rounded-full bg-zinc-700" />
-              <span>Android 8.0+</span>
-              <span className="w-1 h-1 rounded-full bg-zinc-700" />
-              <span>{release?.sizeMb ?? "—"}</span>
-            </div>
+            <DownloadButton variant="cta" />
+            <DownloadMeta />
             <p className="mt-4 text-sm text-zinc-500">
               Need help or found a bug?{" "}
               <a
@@ -653,3 +415,27 @@ export default function Home() {
     </>
   );
 }
+
+function PhoneFrameStatic({ children }: { children: React.ReactNode }) {
+  return (
+    <div className="relative w-[300px]">
+      <div className="relative rounded-[32px] bg-zinc-900 p-2 shadow-2xl shadow-black/60 ring-1 ring-white/10">
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-28 h-5 bg-black rounded-b-xl z-10 flex items-center justify-center gap-2">
+          <div className="w-2 h-2 rounded-full bg-zinc-800" />
+        </div>
+        <div className="rounded-[24px] bg-[#06060E] overflow-hidden relative">
+          <div className="flex items-center justify-between px-5 pt-3 pb-1 text-[10px] text-white/60 bg-[#06060E] sticky top-0 z-10">
+            <span className="font-semibold">9:41</span>
+            <div className="flex items-center gap-1">
+              <div className="w-4 h-2.5 rounded-sm border border-white/30 relative"><div className="absolute inset-0.5 rounded-sm bg-white/40" /></div>
+              <span className="text-xs">📶</span>
+            </div>
+          </div>
+          <div className="overflow-y-auto scrollbar-hide h-[480px]">{children}</div>
+        </div>
+      </div>
+      <div className="absolute inset-0 rounded-[32px] bg-gradient-to-t from-white/[0.03] to-transparent pointer-events-none" />
+    </div>
+  );
+}
+
