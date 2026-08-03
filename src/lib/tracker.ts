@@ -1,36 +1,21 @@
-const FIREBASE_ENABLED = Boolean(process.env.NEXT_PUBLIC_FIREBASE_API_KEY);
-
-async function getDb() {
-  if (!FIREBASE_ENABLED) return null;
-  try {
-    const [{ getFirestore }, { app }] = await Promise.all([
-      import("firebase/firestore"),
-      import("./firebase"),
-    ]);
-    return app ? getFirestore(app) : null;
-  } catch {
-    return null;
-  }
-}
+import { FIREBASE_ENABLED, createDocument } from "@/lib/firebase-rest";
 
 async function logEvent(type: "pageview" | "download", source: string, page?: string) {
+  if (!FIREBASE_ENABLED) return;
   try {
-    const db = await getDb();
-    if (!db) return;
-    const { doc, setDoc } = await import("firebase/firestore");
     const now = new Date();
     const bd = new Date(now.getTime() + 6 * 60 * 60 * 1000);
     const id = `${Date.now()}_${Math.random().toString(36).slice(2, 8)}`;
-    await setDoc(doc(db, "visits", id), {
+    await createDocument("visits", id, {
       type,
       source,
       page: page || (typeof window !== "undefined" ? window.location.pathname : "/"),
       timestamp: now.toISOString(),
       date: bd.toISOString().split("T")[0],
       hour: bd.getUTCHours(),
-      ua: (typeof navigator !== "undefined" ? navigator.userAgent : "").slice(0, 120),
+      ua: typeof navigator !== "undefined" ? navigator.userAgent.slice(0, 120) : "",
       ref: typeof document !== "undefined" ? document.referrer : "",
-    }).catch(() => {});
+    });
   } catch {}
 }
 

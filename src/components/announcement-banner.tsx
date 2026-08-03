@@ -20,12 +20,9 @@ export default function AnnouncementBanner() {
     if (!FIREBASE_ENABLED) return;
     runWhenIdle(async () => {
       try {
-        const { getFirestore, doc, getDoc } = await import("firebase/firestore");
-        const { app } = await import("@/lib/firebase");
-        if (!app) return;
-        const snap = await getDoc(doc(getFirestore(app), "config", "site"));
-        if (!snap.exists()) return;
-        const d = snap.data();
+        const { getDocument } = await import("@/lib/firebase-rest");
+        const d = await getDocument("config/site");
+        if (!d) return;
         const msg = String(d.announcement ?? "").trim();
         if (d.announcementEnabled && msg) {
           const dismissed = sessionStorage.getItem("ann_dismissed");

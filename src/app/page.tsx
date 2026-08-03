@@ -1,14 +1,14 @@
 import {
-  BarChart3,
-  Moon,
-  Zap,
-  Shield,
-  Sparkles,
-  ChevronRight,
-  Star,
-  HelpCircle,
-  Download,
-} from "lucide-react";
+  BarChart3Icon,
+  MoonIcon,
+  ZapIcon,
+  ShieldIcon,
+  SparklesIcon,
+  ChevronRightIcon,
+  StarIcon,
+  HelpCircleIcon,
+  DownloadIcon,
+} from "@/components/icons";
 import AnnouncementBanner from "@/components/announcement-banner";
 import BannerCarousel from "@/components/banner-carousel";
 import { DownloadButton, DownloadMeta } from "@/components/download";
@@ -18,22 +18,22 @@ import { SITE_URL, TELEGRAM_URL, APK_PATH } from "@/lib/site";
 
 const features = [
   {
-    icon: BarChart3,
+    icon: BarChart3Icon,
     title: "Live Scores — Worldwide",
     desc: "100+ leagues from every continent with live minutes, lineups, stats, H2H & ball-by-ball commentary",
   },
   {
-    icon: Shield,
+    icon: ShieldIcon,
     title: "Live TV Built In",
     desc: "1000+ live TV channels streaming inside the app — tap a match's channel and watch instantly",
   },
   {
-    icon: Moon,
+    icon: MoonIcon,
     title: "Dark & Light Mode",
     desc: "Premium electric-blue design with a one-tap theme switch that remembers your choice",
   },
   {
-    icon: Zap,
+    icon: ZapIcon,
     title: "Fast & Light",
     desc: "Tuned for quick loading, smooth scrolling & minimal battery usage",
   },
@@ -208,7 +208,7 @@ export default function Home() {
               <DownloadButton variant="hero" />
               <a href="#features" className="inline-flex items-center gap-2 rounded-full border border-zinc-700/50 bg-[#0E0E1C] px-7 py-3.5 font-semibold text-zinc-300 transition-all hover:bg-[#16172E] hover:border-zinc-600 text-base">
                 Explore
-                <ChevronRight className="h-4 w-4" />
+                <ChevronRightIcon className="h-4 w-4" />
               </a>
             </div>
 
@@ -250,7 +250,7 @@ export default function Home() {
           <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,_#00B4FF_0%,_transparent_60%)] opacity-[0.03]" />
           <div className="mb-16 text-center relative">
             <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#00B4FF]/10 border border-[#00B4FF]/20 text-[#00B4FF] text-xs font-semibold mb-5 tracking-wider uppercase backdrop-blur-sm">
-              <Sparkles className="w-3.5 h-3.5" />
+              <SparklesIcon className="w-3.5 h-3.5" />
               Features
             </div>
             <h2 className="text-4xl font-extrabold tracking-tight sm:text-5xl text-white">
@@ -285,7 +285,7 @@ export default function Home() {
           <div className="mx-auto max-w-6xl px-6 py-24 sm:py-32">
             <div className="mb-16 text-center">
               <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#00B4FF]/10 border border-[#00B4FF]/20 text-[#00B4FF] text-xs font-semibold mb-5 tracking-wider uppercase backdrop-blur-sm">
-                <Star className="w-3.5 h-3.5" />
+                <StarIcon className="w-3.5 h-3.5" />
                 Preview
               </div>
               <h2 className="text-4xl font-extrabold tracking-tight sm:text-5xl text-white">
@@ -315,7 +315,7 @@ export default function Home() {
         <section className="mx-auto max-w-6xl px-6 py-24 sm:py-32">
           <div className="mb-16 text-center">
             <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#00B4FF]/10 border border-[#00B4FF]/20 text-[#00B4FF] text-xs font-semibold mb-5 tracking-wider uppercase backdrop-blur-sm">
-              <Star className="w-3.5 h-3.5" />
+              <StarIcon className="w-3.5 h-3.5" />
               Leagues
             </div>
             <h2 className="text-4xl font-extrabold tracking-tight sm:text-5xl text-white">
@@ -340,7 +340,7 @@ export default function Home() {
           <div className="mx-auto max-w-3xl px-6 py-24 sm:py-32">
             <div className="mb-16 text-center">
               <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#00B4FF]/10 border border-[#00B4FF]/20 text-[#00B4FF] text-xs font-semibold mb-5 tracking-wider uppercase backdrop-blur-sm">
-                <HelpCircle className="w-3.5 h-3.5" />
+                <HelpCircleIcon className="w-3.5 h-3.5" />
                 FAQ
               </div>
               <h2 className="text-4xl font-extrabold tracking-tight sm:text-5xl text-white">
@@ -355,7 +355,7 @@ export default function Home() {
                 >
                   <summary className="flex cursor-pointer list-none items-center justify-between gap-4 font-bold text-white">
                     {f.q}
-                    <ChevronRight className="h-4 w-4 shrink-0 text-[#00B4FF] transition-transform group-open:rotate-90" />
+                    <ChevronRightIcon className="h-4 w-4 shrink-0 text-[#00B4FF] transition-transform group-open:rotate-90" />
                   </summary>
                   <p className="mt-3 text-sm leading-relaxed text-zinc-400">{f.a}</p>
                 </details>
@@ -369,7 +369,7 @@ export default function Home() {
           <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,_#00B4FF_0%,_transparent_60%)] opacity-[0.06]" />
           <div className="relative">
             <div className="mx-auto mb-8 w-20 h-20 rounded-2xl bg-gradient-to-br from-[#00B4FF] to-[#0077FF] shadow-2xl shadow-[#00B4FF]/30 flex items-center justify-center">
-              <Download className="h-9 w-9 text-[#06060E]" />
+              <DownloadIcon className="h-9 w-9 text-[#06060E]" />
             </div>
             <h2 className="mb-4 text-4xl font-extrabold tracking-tight sm:text-5xl text-white">
               Get started now
