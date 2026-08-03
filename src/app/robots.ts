@@ -8,12 +8,13 @@ export default function robots(): MetadataRoute.Robots {
       {
         userAgent: "*",
         allow: "/",
-        disallow: [
-          "/admin",
-          "/channels.json",
-          "/app-release.apk",
-          "/version.json",
-        ],
+  disallow: [
+    "/admin",
+    "/channels.json",
+    "/app-release.apk",
+    "/version.json",
+    "/*.txt",
+  ],
       },
     ],
     sitemap: "https://crifo.netlify.app/sitemap.xml",

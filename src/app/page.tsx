@@ -143,8 +143,15 @@ export default function Home() {
       />
       <SiteAnalytics />
 
+      <a
+        href="#main"
+        className="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-[100] focus:rounded-full focus:bg-[#00B4FF] focus:px-4 focus:py-2 focus:text-sm focus:font-bold focus:text-[#06060E]"
+      >
+        Skip to content
+      </a>
+
       {/* Announcement banner + Nav (single fixed stack) */}
-      <div className="fixed top-0 inset-x-0 z-50">
+      <header className="fixed top-0 inset-x-0 z-50">
         <AnnouncementBanner />
         <nav className="border-b border-[#00B4FF]/10 bg-[#06060E]/80 backdrop-blur-2xl">
           <div className="mx-auto flex max-w-6xl items-center justify-between px-6 h-16">
@@ -163,9 +170,9 @@ export default function Home() {
             </div>
           </div>
         </nav>
-      </div>
+      </header>
 
-      <main>
+      <main id="main">
         {/* HERO */}
         <section className="relative min-h-dvh flex flex-col lg:flex-row items-center justify-center gap-10 px-6 pt-28 pb-20 overflow-hidden">
           {/* Background */}
@@ -177,7 +184,7 @@ export default function Home() {
           <div className="pointer-events-none absolute inset-0 animate-stadium-light bg-gradient-to-r from-transparent via-[#00B4FF] to-transparent blur-3xl" />
 
           {/* Animated background footballs */}
-          <div className="pointer-events-none absolute inset-0 overflow-hidden">
+          <div aria-hidden="true" className="pointer-events-none absolute inset-0 overflow-hidden">
             <div className="animate-float-ball absolute -top-10 -left-10 text-7xl opacity-[0.03] select-none">⚽</div>
             <div className="animate-float-ball2 absolute -bottom-10 -right-10 text-6xl opacity-[0.03] select-none">⚽</div>
           </div>
@@ -205,8 +212,8 @@ export default function Home() {
               </a>
             </div>
 
-            {/* Marquee leagues */}
-            <div className="mt-10 overflow-hidden">
+            {/* Marquee leagues (decorative, repeats content for the animation) */}
+            <div aria-hidden="true" className="mt-10 overflow-hidden">
               <div className="flex gap-3 animate-marquee whitespace-nowrap">
                 {[...leagues, ...leagues].map((l, i) => (
                   <span key={i} className="inline-flex items-center gap-1.5 rounded-full border border-white/5 bg-white/[0.02] px-3 py-1 text-[10px] text-zinc-500">
@@ -232,7 +239,7 @@ export default function Home() {
             ].map((s) => (
               <div key={s.label} className="text-center">
                 <div className="text-3xl font-black text-[#00B4FF] tracking-tight">{s.value}</div>
-                <div className="text-xs text-zinc-500 font-medium mt-1">{s.label}</div>
+                <div className="text-xs text-zinc-400 font-medium mt-1">{s.label}</div>
               </div>
             ))}
           </div>
@@ -393,7 +400,7 @@ export default function Home() {
 
       {/* Footer */}
       <footer className="border-t border-[#00B4FF]/8 bg-[#06060E]">
-        <div className="mx-auto flex max-w-6xl flex-col items-center gap-3 px-6 py-10 text-center text-sm text-zinc-600">
+        <div className="mx-auto flex max-w-6xl flex-col items-center gap-3 px-6 py-10 text-center text-sm text-zinc-400">
           <div className="flex items-center gap-2.5 mb-1">
             <FootballLogoSvg className="w-6 h-6" />
             <span className="font-bold text-white">Cri<span className="text-[#00B4FF]">FO</span></span>
@@ -418,7 +425,7 @@ export default function Home() {
 
 function PhoneFrameStatic({ children }: { children: React.ReactNode }) {
   return (
-    <div className="relative w-[300px]">
+    <div aria-hidden="true" className="relative w-[300px]">
       <div className="relative rounded-[32px] bg-zinc-900 p-2 shadow-2xl shadow-black/60 ring-1 ring-white/10">
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-28 h-5 bg-black rounded-b-xl z-10 flex items-center justify-center gap-2">
           <div className="w-2 h-2 rounded-full bg-zinc-800" />

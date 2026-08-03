@@ -81,3 +81,9 @@
 
 .scrollbar-hide::-webkit-scrollbar { display: none; }
 .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+
+:focus-visible {
+  outline: 2px solid #00B4FF;
+  outline-offset: 2px;
+  border-radius: 6px;
+}
