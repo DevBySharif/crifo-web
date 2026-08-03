@@ -436,6 +436,12 @@ export default function Home() {
             Telegram Support
           </a>
           <nav aria-label="Footer" className="flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-sm">
+            <a href="/leagues" className="text-zinc-400 transition-colors hover:text-white">
+              Leagues
+            </a>
+            <a href="/blog" className="text-zinc-400 transition-colors hover:text-white">
+              Blog
+            </a>
             <a href="/about" className="text-zinc-400 transition-colors hover:text-white">
               About
             </a>
